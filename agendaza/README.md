@@ -12,12 +12,12 @@ Espacio de trabajo para armar, probar y versionar las imágenes de publicación 
 ├── screenshots/     Capturas de pantalla de la app
 │   └──0.1.0
 ├── mockups/         Mockups de Stores para probar cómo quedan
-│   ├── playstore/   ...
-│   └── applestore/  ...
-│   └── banner/  ...
+│   ├── playstore
+│   └── applestore
+│   └── banner
 ├── 0.1.0/           Imágenes generadas para cada version
-├── 0.1.1/           ...
-├── 0.1.2/           ...
+├── 0.1.1/
+├── 0.1.2/
 └── README.md
 ```
 
@@ -27,7 +27,7 @@ Espacio de trabajo para armar, probar y versionar las imágenes de publicación 
 
 | Carpeta | Contenido |
 |---|---|
-| `assets/` | Logo de Agendaza (la "A", `adaptive-icon.png`) y logo de estonianport (`logo.png`). |
+| `assets/` | Logo de Agendaza (la "A", `logo.png`) y logo de estonianport (`logo.png`). |
 | `screenshots/` | Capturas reales de la app (Agenda, Reservar, Finanzas).|
 | `mockups/` | Un mockup de Play Store y otro de App Store donde se van intercambiando las imágenes para ver cómo se ven en la ficha. |
 | `0.x.x/` | Una carpeta por versión de la app, con las imágenes finales y de prueba que se generan para esa versión. |
