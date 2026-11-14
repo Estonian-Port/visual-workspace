@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendaza — App Store (iOS Mockup)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fuente Inter como respaldo cercano a SF Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Variables y tokens nativos de iOS (Light & Dark Mode) */
+    :root {
+      --ios-bg: #FFFFFF;
+      --ios-grouped-bg: #F2F2F7;
+      --ios-card-bg: #F2F2F7;
+      --ios-elevated-bg: #FFFFFF;
+      --ios-text-primary: #000000;
+      --ios-text-secondary: #8E8E93;
+      --ios-text-tertiary: #AEAEB2;
+      --ios-separator: rgba(60, 60, 67, 0.16);
+      --ios-blue: #007AFF;
+      --ios-blue-active: #0062CC;
+      --ios-pill-gray: #EEEEF0;
+      --ios-nav-blur: rgba(255, 255, 255, 0.82);
+      --ios-tab-blur: rgba(249, 249, 249, 0.86);
+      --ios-icon-border: rgba(0, 0, 0, 0.08);
+      --ios-shadow-card: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --screen-border-radius: 47px;
+    }
+
+    .ios-dark {
+      --ios-bg: #000000;
+      --ios-grouped-bg: #1C1C1E;
+      --ios-card-bg: #1C1C1E;
+      --ios-elevated-bg: #2C2C2E;
+      --ios-text-primary: #FFFFFF;
+      --ios-text-secondary: #8E8E93;
+      --ios-text-tertiary: #636366;
+      --ios-separator: rgba(84, 84, 88, 0.45);
+      --ios-blue: #0A84FF;
+      --ios-blue-active: #409CFF;
+      --ios-pill-gray: #2C2C2E;
+      --ios-nav-blur: rgba(22, 22, 24, 0.82);
+      --ios-tab-blur: rgba(28, 28, 30, 0.85);
+      --ios-icon-border: rgba(255, 255, 255, 0.12);
+      --ios-shadow-card: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 20%, #e2e8f0 0%, #cbd5e1 45%, #94a3b8 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 12px;
+      transition: background 0.35s ease;
+    }
+
+    body.dark-backdrop {
+      background: radial-gradient(circle at 20% 20%, #1e293b 0%, #0f172a 55%, #020617 100%);
+    }
+
+    /* Chasis exterior realista de iPhone 15 Pro / 16 Pro */
+    .iphone-chassis {
+      position: relative;
+      width: 100%;
+      max-width: 402px;
+      height: 844px;
+      max-height: 90vh;
+      border-radius: 56px;
+      background: linear-gradient(145deg, #3a3a3e 0%, #1c1c1e 35%, #2c2c2e 70%, #18181a 100%);
+      padding: 12px;
+      box-shadow:
+        0 30px 70px -15px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+        0 0 2px 2px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Botones laterales físicos del iPhone */
+    .iphone-chassis::before {
+      content: "";
+      position: absolute;
+      left: -3px;
+      top: 130px;
+      width: 3px;
+      height: 28px;
+      background: #2c2c2e;
+      border-radius: 3px 0 0 3px;
+      box-shadow: 0 48px 0 #2c2c2e, 0 96px 0 #2c2c2e;
+    }
+    .iphone-chassis::after {
+      content: "";
+      position: absolute;
+      right: -3px;
+      top: 195px;
+      width: 3px;
+      height: 74px;
+      background: #2c2c2e;
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* Pantalla interna */
+    .iphone-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--screen-border-radius);
+      background-color: var(--ios-bg);
+      color: var(--ios-text-primary);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Barra de estado y Dynamic Island */
+    .status-bar {
+      position: relative;
+      z-index: 40;
+      height: 52px;
+      padding: 14px 26px 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ios-text-primary);
+      flex-shrink: 0;
+    }
+
+    .dynamic-island {
+      position: absolute;
+      left: 50%;
+      top: 11px;
+      transform: translateX(-50%);
+      width: 122px;
+      height: 35px;
+      background-color: #000000;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 11px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+      z-index: 50;
+    }
+
+    .dynamic-island-lens {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #2a3b68 0%, #0d1326 60%, #03050a 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Barra de navegación superior iOS */
+    .ios-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: 44px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: transparent;
+      border-bottom: 0.5px solid transparent;
+      transition: background-color 0.2s ease, border-color 0.2s ease, backdrop-filter 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .ios-navbar.scrolled {
+      background-color: var(--ios-nav-blur);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom-color: var(--ios-separator);
+    }
+
+    .ios-nav-title-mini {
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .ios-navbar.scrolled .ios-nav-title-mini {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ios-nav-get-mini {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.92);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .ios-navbar.scrolled .ios-nav-get-mini {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    /* Contenedor con scroll estilo iOS */
+    .ios-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 94px;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+    }
+    .ios-scroll-area::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Squircle / Icono iOS */
+    .ios-app-icon {
+      border-radius: 22.5%;
+      overflow: hidden;
+    }
+
+    /* Botón Obtener estilo App Store */
+    .btn-get {
+      background-color: var(--ios-blue);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      border-radius: 9999px;
+      padding: 6px 20px;
+      min-width: 78px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.12s ease, background-color 0.2s ease, width 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-get:active {
+      transform: scale(0.94);
+      background-color: var(--ios-blue-active);
+    }
+    .btn-get.downloading {
+      background-color: transparent;
+      padding: 0;
+      min-width: 30px;
+      width: 30px;
+    }
+
+    .btn-ver {
+      background-color: var(--ios-pill-gray);
+      color: var(--ios-blue);
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 9999px;
+      padding: 5px 16px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.12s ease, opacity 0.15s ease;
+    }
+    .btn-ver:active {
+      transform: scale(0.94);
+      opacity: 0.7;
+    }
+
+    /* Cinta de información horizontal (Information Ribbon) */
+    .info-ribbon {
+      display: flex;
+      overflow-x: auto;
+      padding: 12px 20px;
+      border-top: 0.5px solid var(--ios-separator);
+      border-bottom: 0.5px solid var(--ios-separator);
+      scrollbar-width: none;
+    }
+    .info-ribbon::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ribbon-item {
+      flex: 0 0 auto;
+      min-width: 92px;
+      padding: 0 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      position: relative;
+    }
+    .ribbon-item:first-child {
+      padding-left: 4px;
+    }
+    .ribbon-item:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 14%;
+      height: 72%;
+      width: 0.5px;
+      background-color: var(--ios-separator);
+    }
+
+    /* Carrusel horizontal de capturas */
+    .screenshots-carousel {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 4px 20px 12px 20px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .screenshots-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .screenshot-card {
+      flex: 0 0 205px;
+      aspect-ratio: 1179 / 2556;
+      border-radius: 24px;
+      overflow: hidden;
+      scroll-snap-align: start;
+      border: 0.5px solid var(--ios-icon-border);
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+    }
+    .screenshot-card:active {
+      transform: scale(0.97);
+    }
+
+    /* Separadores nativos de sección */
+    .ios-section {
+      padding: 16px 20px;
+      border-top: 0.5px solid var(--ios-separator);
+    }
+
+    /* Tabla agrupada Ficha Técnica */
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 11px 0;
+      border-bottom: 0.5px solid var(--ios-separator);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .spec-row:last-child {
+      border-bottom: none;
+    }
+
+    /* Tab Bar inferior translúcida de iOS */
+    .ios-tabbar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 35;
+      height: 82px;
+      padding: 8px 8px 22px 8px;
+      background-color: var(--ios-tab-blur);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      border-top: 0.5px solid var(--ios-separator);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: center;
+    }
+
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--ios-text-secondary);
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+    .tab-item.active {
+      color: var(--ios-blue);
+    }
+
+    /* Home Indicator bar */
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      border-radius: 100px;
+      background-color: var(--ios-text-primary);
+      opacity: 0.85;
+      z-index: 45;
+      pointer-events: none;
+    }
+
+    /* Animación de descarga circular iOS */
+    @keyframes spinLoader {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .ios-spinner {
+      animation: spinLoader 0.9s linear infinite;
+    }
+
+    /* Adaptación en pantallas muy pequeñas */
+    @media (max-width: 430px) {
+      body {
+        padding: 0;
+      }
+      .iphone-chassis {
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+      .iphone-chassis::before,
+      .iphone-chassis::after {
+        display: none;
+      }
+      .iphone-screen {
+        border-radius: 0;
+      }
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra superior flotante fuera del iPhone para controles del mockup -->
+  <div class="mb-4 hidden sm:flex flex-wrap items-center justify-center gap-2.5 z-50 px-3">
+    <div class="inline-flex items-center gap-1.5 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg border border-black/10 text-xs font-medium text-slate-700">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span>App Store iOS 17 · Vista previa interactiva</span>
+    </div>
+
+    <button
+      id="themeToggleBtn"
+      type="button"
+      class="inline-flex items-center gap-2 bg-slate-900 text-white hover:bg-slate-800 px-4 py-1.5 rounded-full shadow-lg text-xs font-semibold transition active:scale-95 cursor-pointer"
+    >
+      <span id="themeIcon">🌙</span>
+      <span id="themeLabel">Modo Oscuro iOS</span>
+    </button>
+
+    <button
+      id="resetDownloadBtn"
+      type="button"
+      class="hidden items-center gap-1.5 bg-white/90 hover:bg-white text-slate-800 px-3.5 py-1.5 rounded-full shadow-lg border border-black/10 text-xs font-semibold transition active:scale-95 cursor-pointer"
+    >
+      <span>↺ Reiniciar descarga</span>
+    </button>
+  </div>
+
+  <!-- Marco realista de iPhone -->
+  <div class="iphone-chassis">
+    <div id="iphoneScreen" class="iphone-screen">
+
+      <!-- Dynamic Island -->
+      <div class="dynamic-island" aria-hidden="true">
+        <div class="dynamic-island-lens"></div>
+      </div>
+
+      <!-- Barra de Estado iOS -->
+      <div class="status-bar">
+        <span id="iosClock">9:41</span>
+        <div class="flex items-center gap-1.5">
+          <!-- Señal celular -->
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor" aria-hidden="true">
+            <rect x="0" y="7" width="3" height="4" rx="1" />
+            <rect x="4.5" y="5" width="3" height="6" rx="1" />
+            <rect x="9" y="2.5" width="3" height="8.5" rx="1" />
+            <rect x="13.5" y="0" width="3" height="11" rx="1" />
+          </svg>
+          <!-- Wi-Fi -->
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor" aria-hidden="true">
+            <path d="M7.5 8.8a1.35 1.35 0 1 0 0 2.7 1.35 1.35 0 0 0 0-2.7zm-3.4-2.1a5.1 5.1 0 0 1 6.8 0l1.1-1.2a6.7 6.7 0 0 0-9 0l1.1 1.2zm-2.6-2.7a8.8 8.8 0 0 1 12 0l1.1-1.2a10.4 10.4 0 0 0-14.2 0L1.5 4z"/>
+          </svg>
+          <!-- Batería -->
+          <div class="flex items-center">
+            <div class="w-[23px] h-[11.5px] rounded-[3.5px] border border-current/40 p-[1.5px] flex items-center">
+              <div class="w-full h-full bg-current rounded-[1.8px]"></div>
+            </div>
+            <div class="w-[1.5px] h-[4px] bg-current/50 rounded-r-sm ml-[1px]"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Navegación Superior iOS -->
+      <header id="iosNavbar" class="ios-navbar">
+        <button
+          id="backBtn"
+          type="button"
+          class="flex items-center gap-0.5 text-[17px] font-normal cursor-pointer active:opacity-60"
+          style="color: var(--ios-blue);"
+        >
+          <svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 18L2 10L10 2"/>
+          </svg>
+          <span>Atrás</span>
+        </button>
+
+        <!-- Título e icono compacto que aparecen al hacer scroll -->
+        <div class="ios-nav-title-mini">
+          <img
+            src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/60/39/d8/6039d855-6ae2-b298-8a36-c5542c9530fe/Placeholder.mill/400x400Icon.ApSiOS01-75.jpg"
+            alt="Agendaza"
+            onerror="this.onerror=null; this.src='https://placehold.co/64x64/1e293b/ffffff?text=A';"
+            class="w-6 h-6 rounded-[6px] object-cover border border-black/10"
+          />
+          <span>Agendaza</span>
+        </div>
+
+        <!-- Botón Obtener compacto en navbar -->
+        <div class="ios-nav-get-mini">
+          <button
+            type="button"
+            data-get-trigger
+            class="btn-get !h-[26px] !min-w-[68px] !text-[13px] !px-3.5"
+          >
+            Obtener
+          </button>
+        </div>
+      </header>
+
+      <!-- Área principal con scroll -->
+      <main id="iosScrollArea" class="ios-scroll-area">
+
+        <!-- Cabecera de la App (Icono + Título + Subtítulo + Obtener + Compartir) -->
+        <section class="px-5 pt-2 pb-4 flex gap-4 items-start">
+          <div class="ios-app-icon w-[114px] h-[114px] flex-shrink-0">
+            <img
+              src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/60/39/d8/6039d855-6ae2-b298-8a36-c5542c9530fe/Placeholder.mill/400x400Icon.ApSiOS01-75.jpg"
+              alt="Icono de Agendaza"
+              onerror="this.onerror=null; this.src='https://placehold.co/400x400/0f172a/38bdf8?text=Agendaza';"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <div class="flex-1 min-w-0 flex flex-col justify-between min-h-[114px]">
+            <div>
+              <h1 class="text-[22px] font-bold leading-[1.18] tracking-[-0.02em]">
+                Agendaza
+              </h1>
+              <p class="text-[14px] leading-[1.3] mt-0.5" style="color: var(--ios-text-secondary);">
+                Gestion de salones de eventos
+              </p>
+              <a
+                href="#moreByDeveloper"
+                class="inline-block text-[13px] font-medium mt-1 hover:underline"
+                style="color: var(--ios-blue);"
+              >
+                Sebastian Rodriguez
+              </a>
+            </div>
+
+            <!-- Fila de acciones: Obtener + Gratis + Compartir -->
+            <div class="flex items-center justify-between pt-2.5 mt-auto">
+              <div class="flex items-center gap-2">
+                <button
+                  id="mainGetBtn"
+                  type="button"
+                  data-get-trigger
+                  class="btn-get"
+                  aria-label="Obtener Agendaza"
+                >
+                  Obtener
+                </button>
+                <span id="priceSubLabel" class="text-[10px] leading-tight max-w-[65px]" style="color: var(--ios-text-secondary);">
+                  Gratis
+                </span>
+              </div>
+
+              <!-- Botón Compartir estilo iOS -->
+              <button
+                id="shareBtn"
+                type="button"
+                aria-label="Compartir"
+                class="w-8 h-8 rounded-full flex items-center justify-center active:opacity-50 transition cursor-pointer"
+                style="color: var(--ios-blue);"
+              >
+                <svg width="20" height="24" viewBox="0 0 86.639 110.16" fill="currentColor">
+                  <path d="M15.318 110.16H71.32c10.233 0 15.32-5.107 15.32-15.163v-48.65c0-10.067-5.087-15.165-15.319-15.165H57.736v7.896h13.46c4.784 0 7.591 2.62 7.591 7.652v47.884c-.001 5.083-2.808 7.64-7.591 7.64H15.444c-4.878.001-7.591-2.556-7.591-7.639V46.73c0-5.032 2.713-7.652 7.59-7.652h13.481v-7.895H15.318C5.138 31.183 0 36.26 0 46.346v48.651c0 10.077 5.138 15.163 15.318 15.163"/>
+                  <path d="M43.294 71.932c2.124 0 3.926-1.752 3.926-3.823V18.013l-.32-7.34 3.27 3.489 7.403 7.868a3.66 3.66 0 0 0 2.642 1.16c2.051 0 3.595-1.44 3.595-3.398 0-1.088-.435-1.844-1.202-2.56L46.122 1.306C45.148.332 44.33 0 43.294 0c-.985 0-1.814.332-2.829 1.305L23.97 17.233c-.716.715-1.151 1.471-1.151 2.559 0 1.958 1.481 3.398 3.543 3.398.933 0 1.98-.394 2.684-1.16l7.412-7.868 3.282-3.5-.321 7.351V68.11c0 2.07 1.803 3.822 3.875 3.822"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Cinta de Información Horizontal (Information Ribbon) -->
+        <section class="info-ribbon" aria-label="Información rápida">
+          <!-- Edad -->
+          <a href="#information" class="ribbon-item">
+            <span class="text-[10px] font-semibold uppercase tracking-wide" style="color: var(--ios-text-secondary);">Edad</span>
+            <span class="text-[20px] font-bold leading-tight my-1" style="color: var(--ios-text-secondary);">4+</span>
+            <span class="text-[11px]" style="color: var(--ios-text-secondary);">Años</span>
+          </a>
+
+          <!-- Categoría -->
+          <a href="#information" class="ribbon-item">
+            <span class="text-[10px] font-semibold uppercase tracking-wide" style="color: var(--ios-text-secondary);">Categoría</span>
+            <div class="my-1 flex items-center justify-center h-[24px]" style="color: var(--ios-text-secondary);">
+              <!-- Ícono maletín Negocios -->
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+            </div>
+            <span class="text-[11px] whitespace-nowrap" style="color: var(--ios-text-secondary);">Negocios</span>
+          </a>
+
+          <!-- Desarrollador -->
+          <a href="#moreByDeveloper" class="ribbon-item">
+            <span class="text-[10px] font-semibold uppercase tracking-wide" style="color: var(--ios-text-secondary);">Desarrollador</span>
+            <div class="my-1 flex items-center justify-center h-[24px]" style="color: var(--ios-text-secondary);">
+              <svg width="22" height="22" viewBox="0 0 114.778 100" fill="currentColor">
+                <path d="M27.779 89.768h59.224c10.232 0 15.318-5.107 15.318-15.163V15.019c0-10.056-5.086-15.163-15.318-15.163H27.779c-10.18 0-15.318 5.086-15.318 15.163v59.586c0 10.077 5.138 15.163 15.318 15.163m.125-7.905c-4.877 0-7.59-2.558-7.59-7.641v-58.82c0-5.031 2.713-7.64 7.59-7.64h58.974c4.835 0 7.59 2.609 7.59 7.64v58.82c0 5.083-2.755 7.641-7.59 7.641Zm-4.092 2.888H90.99c-2.839-13.705-16.644-23.662-33.563-23.662-16.97 0-30.775 9.957-33.615 23.662m33.605-31.834c9.293.104 16.665-7.808 16.665-18.253 0-9.843-7.372-17.9-16.665-17.9-9.345 0-16.769 8.057-16.717 17.9.052 10.445 7.372 18.202 16.717 18.253"/>
+              </svg>
+            </div>
+            <span class="text-[11px] max-w-[96px] truncate" style="color: var(--ios-text-secondary);">Sebastian Rodriguez</span>
+          </a>
+
+          <!-- Idioma -->
+          <a href="#information" class="ribbon-item">
+            <span class="text-[10px] font-semibold uppercase tracking-wide" style="color: var(--ios-text-secondary);">Idioma</span>
+            <span class="text-[20px] font-bold leading-tight my-1" style="color: var(--ios-text-secondary);">EN</span>
+            <span class="text-[11px]" style="color: var(--ios-text-secondary);">Inglés</span>
+          </a>
+
+          <!-- Tamaño -->
+          <a href="#information" class="ribbon-item">
+            <span class="text-[10px] font-semibold uppercase tracking-wide" style="color: var(--ios-text-secondary);">Tamaño</span>
+            <span class="text-[20px] font-bold leading-tight my-1" style="color: var(--ios-text-secondary);">51</span>
+            <span class="text-[11px]" style="color: var(--ios-text-secondary);">MB</span>
+          </a>
+        </section>
+
+        <!-- Sección Novedades / Versión -->
+        <section class="px-5 pt-4 pb-3">
+          <div class="flex items-baseline justify-between">
+            <h2 class="text-[20px] font-bold tracking-[-0.02em]">Novedades</h2>
+            <span class="text-[14px]" style="color: var(--ios-text-secondary);">Version v0.1.0</span>
+          </div>
+          <p class="text-[14px] leading-[1.45] mt-2">
+            Lanzamiento inicial de Agendaza: calendario con eventos registrados, gestión de reservas y seguimiento de pagos y finanzas.
+          </p>
+        </section>
+
+        <!-- Sección Vista Previa (Capturas de pantalla de iPhone) -->
+        <section class="pt-3 pb-2 border-t" style="border-color: var(--ios-separator);">
+          <div class="px-5 pb-2.5 flex items-center justify-between">
+            <h2 class="text-[20px] font-bold tracking-[-0.02em]">Vista previa</h2>
+            <span class="text-[12px]" style="color: var(--ios-text-secondary);">Toca para ampliar</span>
+          </div>
+
+          <div class="screenshots-carousel" role="list">
+            <!-- Captura 1 -->
+            <div class="screenshot-card" role="listitem" data-screenshot-index="0">
+              <!--<img
+                src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/49/16/5f/49165fe1-51e0-42ca-0c61-c3db9b1ba92d/agendaza_captura_1_1179x2556.png/600x1334bb.jpg"
+                alt="Captura de pantalla 1 de Agendaza"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x1334/0d1425/38bdf8?text=Agendaza+Captura+1';"
+                class="w-full h-full object-cover"
+              />-->
+
+              <img
+                src="../0.1.2/iphone_1_1179x2556.png"
+                alt="Captura de pantalla 1 de Agendaza"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x1334/0d1425/38bdf8?text=Agendaza+Captura+1';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            <!-- Captura 2 -->
+            <div class="screenshot-card" role="listitem" data-screenshot-index="1">
+              <!--<img
+                src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/40/a9/ed/40a9ed7c-8958-892d-e8fc-1d38e3c7ae46/agendaza_captura_2_1179x2556.png/600x1334bb.jpg"
+                alt="Captura de pantalla 2 de Agendaza"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x1334/0a121f/38bdf8?text=Agendaza+Captura+2';"
+                class="w-full h-full object-cover"
+              />-->
+              <img
+                src="../0.1.2/iphone_2_1179x2556.png"
+                alt="Captura de pantalla 1 de Agendaza"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x1334/0d1425/38bdf8?text=Agendaza+Captura+1';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            <!-- Captura 3 -->
+            <div class="screenshot-card" role="listitem" data-screenshot-index="2">
+              <!--<img
+                src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f4/5b/3f/f45b3f5d-39df-003a-deeb-cfda6253ed78/agendaza_captura_3_1179x2556.png/600x1334bb.jpg"
+                alt="Captura de pantalla 3 de Agendaza"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x1334/0e1527/38bdf8?text=Agendaza+Captura+3';"
+                class="w-full h-full object-cover"
+              />-->
+              <img
+                src="../0.1.2/iphone_3_1179x2556.png"
+                alt="Captura de pantalla 1 de Agendaza"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x1334/0d1425/38bdf8?text=Agendaza+Captura+1';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <!-- Compatibilidad desplegable (iPhone, iPad) -->
+          <div class="px-5 pt-1 pb-2">
+            <button
+              id="platformCompatToggle"
+              type="button"
+              class="w-full flex items-center justify-between py-2 text-[13px] cursor-pointer"
+              style="color: var(--ios-text-secondary);"
+            >
+              <div class="flex items-center gap-2">
+                <!-- Ícono iPhone -->
+                <svg width="13" height="18" viewBox="0 0 62.771 103.335" fill="currentColor">
+                  <path d="M13.275 103.335h36.169c7.963 0 13.326-5.053 13.326-12.665V12.665C62.771 5.053 57.407 0 49.444 0H13.275C5.301 0 0 5.053 0 12.665V90.67c0 7.612 5.301 12.665 13.275 12.665m1.005-7.842c-4.09 0-6.427-2.183-6.427-6.116V13.959c0-3.933 2.338-6.106 6.427-6.106h6.27c.766 0 1.181.405 1.181 1.173v1.109c.001 2.002 1.35 3.413 3.352 3.413h12.605c2.054 0 3.34-1.411 3.34-3.413v-1.11c0-.766.415-1.171 1.183-1.171h6.228c4.141-.001 6.427 2.172 6.427 6.106v75.417c0 3.933-2.286 6.116-6.427 6.116Zm6.775-3.581h20.712c1.296 0 2.27-.924 2.27-2.282s-.973-2.27-2.269-2.27H21.055c-1.358 0-2.27.912-2.27 2.27s.912 2.282 2.27 2.282"/>
+                </svg>
+                <!-- Ícono iPad -->
+                <svg width="16" height="13" viewBox="0 0 115.09 89.912" fill="currentColor">
+                  <path d="M15.318 89.912h84.454c10.232 0 15.318-5.107 15.318-15.163V15.163C115.09 5.107 110.004 0 99.772 0H15.318C5.138 0 0 5.086 0 15.163v59.586c0 10.077 5.138 15.163 15.318 15.163m.125-7.905c-4.877 0-7.59-2.558-7.59-7.641v-58.82c0-5.032 2.713-7.64 7.59-7.64h84.204c4.834-.001 7.59 2.607 7.59 7.639v58.821c-.001 5.083-2.757 7.64-7.591 7.64Zm23.253-3.739h37.75c1.305 0 2.228-.86 2.228-2.218.001-1.41-.922-2.28-2.229-2.28H38.696c-1.306-.002-2.28.868-2.28 2.278-.001 1.36.974 2.222 2.279 2.222Z"/>
+                </svg>
+                <span class="font-medium">iPhone, iPad</span>
+              </div>
+              <svg id="platformChevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <div id="platformCompatPanel" class="hidden pt-1 pb-2 text-[12px] space-y-1.5" style="color: var(--ios-text-secondary);">
+              <p><strong style="color: var(--ios-text-primary);">iPhone:</strong> Requiere iOS 17.0 o posterior.</p>
+              <p><strong style="color: var(--ios-text-primary);">iPad:</strong> Requiere iPadOS 17.0 o posterior.</p>
+              <p><strong style="color: var(--ios-text-primary);">Mac:</strong> Requiere macOS 12.0 o posterior y una Mac con el chip M1 de Apple o posterior.</p>
+              <p><strong style="color: var(--ios-text-primary);">Apple Vision:</strong> Requiere visionOS 1.0 o posterior.</p>
+              <p class="pt-0.5 text-[11px] opacity-80">Diseñado para iPad. No verificado para macOS.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Descripción Completa con botón "Más" -->
+        <section class="ios-section">
+          <div class="relative">
+            <div id="appDescriptionText" class="text-[14px] leading-[1.48] whitespace-pre-line line-clamp-3 transition-all">Agendaza es un sistema integral para la gestión de eventos en salones.
+
+Facilita la administración de reservas, clientes, catering, servicios adicionales y mucho más.
+
+Version v0.1.0
+
+Características:
+• Calendario con los eventos registrados
+• Generar y gestionar reservas
+• Seguimiento de pagos y gestión de finanzas
+
+Desarrollado por Estonian Port.
+Visitanos en https://estonianport.com.ar/</div>
+
+            <button
+              id="toggleDescBtn"
+              type="button"
+              class="mt-1 text-[14px] font-medium cursor-pointer"
+              style="color: var(--ios-blue);"
+            >
+              Más
+            </button>
+          </div>
+        </section>
+
+        <!-- Calificaciones y Reseñas -->
+        <section id="productRatings" class="ios-section">
+          <h2 class="text-[20px] font-bold tracking-[-0.02em] mb-2">Calificaciones y reseñas</h2>
+          <div
+            class="rounded-2xl p-4 text-[13px] leading-[1.4]"
+            style="background-color: var(--ios-card-bg); color: var(--ios-text-secondary);"
+          >
+            Esta app no ha recibido suficientes calificaciones ni reseñas para mostrar un resumen.
+          </div>
+        </section>
+
+        <!-- Privacidad de la App -->
+        <section id="privacyHeader" class="ios-section">
+          <div class="flex items-center justify-between mb-1.5">
+            <h2 class="text-[20px] font-bold tracking-[-0.02em]">Privacidad de la app</h2>
+            <a
+              href="https://docs.google.com/document/d/e/2PACX-1vTlNhwsGOIGg5EmxqoC8DJybcraCfycSPMjgRbY3W66HBEUI4Jzs6BpjlhicvINljiNrP4Mu1xd8_TH/pub"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[14px] font-medium"
+              style="color: var(--ios-blue);"
+            >
+              Ver detalles
+            </a>
+          </div>
+
+          <p class="text-[13px] leading-[1.4] mb-3.5" style="color: var(--ios-text-secondary);">
+            El desarrollador (<strong>Sebastian Rodriguez</strong>) indicó que las prácticas de privacidad de la app pueden incluir el manejo de datos que se describe a continuación. Para obtener más detalles, consulta la
+            <a
+              href="https://docs.google.com/document/d/e/2PACX-1vTlNhwsGOIGg5EmxqoC8DJybcraCfycSPMjgRbY3W66HBEUI4Jzs6BpjlhicvINljiNrP4Mu1xd8_TH/pub"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="color: var(--ios-blue);"
+            >política de privacidad del desarrollador</a>.
+          </p>
+
+          <!-- Tarjeta nativa "No se recopilan datos" -->
+          <div
+            class="rounded-2xl p-5 flex flex-col items-center text-center shadow-sm"
+            style="background-color: var(--ios-card-bg);"
+          >
+            <div class="w-11 h-11 mb-2.5 flex items-center justify-center" style="color: var(--ios-blue);">
+              <svg width="38" height="38" viewBox="0 0 99.598 99.547" fill="currentColor">
+                <path d="M49.773 99.547c27.224 0 49.825-22.55 49.825-49.774C99.598 22.55 76.945 0 49.722 0 22.54 0 0 22.55 0 49.773s22.591 49.774 49.773 49.774m0-8.268C26.788 91.28 8.36 72.811 8.36 49.773c0-23.037 18.376-41.506 41.362-41.506 23.037 0 41.557 18.469 41.557 41.506A41.36 41.36 0 0 1 49.773 91.28Z"/>
+                <path d="M44.447 72.95c1.585 0 2.932-.765 3.927-2.267l22.298-35.108c.58-.963 1.17-2.062 1.17-3.139 0-2.165-1.906-3.564-3.979-3.564-1.253 0-2.466.725-3.398 2.186L44.229 63.563 34.62 51.098c-1.194-1.564-2.282-1.958-3.608-1.958-2.113 0-3.772 1.69-3.772 3.875.001 1.047.447 2.095 1.111 3.026L40.26 70.682c1.255 1.616 2.54 2.269 4.187 2.269Z"/>
+              </svg>
+            </div>
+            <h3 class="text-[16px] font-bold">No se recopilan datos</h3>
+            <p class="text-[13px] mt-1" style="color: var(--ios-text-secondary);">
+              El desarrollador no recopila ningún dato en esta app.
+            </p>
+          </div>
+        </section>
+
+        <!-- Accesibilidad -->
+        <section class="ios-section">
+          <h2 class="text-[20px] font-bold tracking-[-0.02em] mb-1.5">Accesibilidad</h2>
+          <p class="text-[13px] leading-[1.4]" style="color: var(--ios-text-secondary);">
+            El desarrollador aún no ha indicado cuáles funciones de accesibilidad admite esta app.
+          </p>
+        </section>
+
+        <!-- Ficha Técnica (Información agrupada estilo iOS) -->
+        <section id="information" class="ios-section">
+          <h2 class="text-[20px] font-bold tracking-[-0.02em] mb-2">Información</h2>
+
+          <div>
+            <div class="spec-row">
+              <span style="color: var(--ios-text-secondary);">Vendedor</span>
+              <span class="font-normal text-right">Sebastian Rodriguez</span>
+            </div>
+
+            <div class="spec-row">
+              <span style="color: var(--ios-text-secondary);">Tamaño</span>
+              <span class="font-normal text-right">51 MB</span>
+            </div>
+
+            <div class="spec-row">
+              <span style="color: var(--ios-text-secondary);">Categoría</span>
+              <span class="font-normal text-right">Negocios</span>
+            </div>
+
+            <!-- Fila desplegable Compatibilidad -->
+            <div class="spec-row flex-col !items-stretch">
+              <button
+                type="button"
+                data-accordion-target="specCompatDetails"
+                class="w-full flex items-center justify-between text-left cursor-pointer"
+              >
+                <span style="color: var(--ios-text-secondary);">Compatibilidad</span>
+                <span class="flex items-center gap-1.5">
+                  <span>Funciona en este iPhone</span>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--ios-text-secondary);" class="transition-transform duration-200">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <div id="specCompatDetails" class="hidden pt-2.5 mt-2 border-t text-[13px] space-y-2" style="border-color: var(--ios-separator); color: var(--ios-text-secondary);">
+                <div class="flex justify-between">
+                  <strong style="color: var(--ios-text-primary);">iPhone</strong>
+                  <span>Requiere iOS 17.0 o posterior.</span>
+                </div>
+                <div class="flex justify-between">
+                  <strong style="color: var(--ios-text-primary);">iPad</strong>
+                  <span>Requiere iPadOS 17.0 o posterior.</span>
+                </div>
+                <div class="flex justify-between gap-4">
+                  <strong style="color: var(--ios-text-primary);">Mac</strong>
+                  <span class="text-right">Requiere macOS 12.0 o posterior y chip M1 o posterior.</span>
+                </div>
+                <div class="flex justify-between">
+                  <strong style="color: var(--ios-text-primary);">Apple Vision</strong>
+                  <span>Requiere visionOS 1.0 o posterior.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="spec-row">
+              <span style="color: var(--ios-text-secondary);">Idiomas</span>
+              <span class="font-normal text-right">Inglés</span>
+            </div>
+
+            <!-- Fila desplegable Edad -->
+            <div class="spec-row flex-col !items-stretch">
+              <button
+                type="button"
+                data-accordion-target="specAgeDetails"
+                class="w-full flex items-center justify-between text-left cursor-pointer"
+              >
+                <span style="color: var(--ios-text-secondary);">Clasificación por edad</span>
+                <span class="flex items-center gap-1.5">
+                  <span>4+</span>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--ios-text-secondary);" class="transition-transform duration-200">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <div id="specAgeDetails" class="hidden pt-2 mt-2 border-t text-[12px]" style="border-color: var(--ios-separator); color: var(--ios-text-secondary);">
+                Apto para todo público (4+ años). No contiene material cuestionable.
+              </div>
+            </div>
+
+            <div class="spec-row">
+              <span style="color: var(--ios-text-secondary);">Copyright</span>
+              <span class="font-normal text-right">© Estonian Port</span>
+            </div>
+
+            <!-- Enlace Sitio Web del Desarrollador -->
+            <div class="spec-row">
+              <a
+                href="https://estonianport.com.ar/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full flex items-center justify-between py-0.5"
+                style="color: var(--ios-blue);"
+              >
+                <span>Sitio web del desarrollador</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </a>
+            </div>
+
+            <!-- Enlace Política de privacidad -->
+            <div class="spec-row">
+              <a
+                href="https://docs.google.com/document/d/e/2PACX-1vTlNhwsGOIGg5EmxqoC8DJybcraCfycSPMjgRbY3W66HBEUI4Jzs6BpjlhicvINljiNrP4Mu1xd8_TH/pub"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full flex items-center justify-between py-0.5"
+                style="color: var(--ios-blue);"
+              >
+                <span>Política de privacidad</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sección "Más de Sebastian Rodriguez" -->
+        <section id="moreByDeveloper" class="ios-section">
+          <div class="flex items-center justify-between mb-3.5">
+            <h2 class="text-[20px] font-bold tracking-[-0.02em]">Más de Sebastian Rodriguez</h2>
+            <a
+              href="https://apps.apple.com/ar/developer/sebastian-rodriguez/id1845407028"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[14px]"
+              style="color: var(--ios-blue);"
+            >
+              Ver todo
+            </a>
+          </div>
+
+          <div class="space-y-3.5">
+            <!-- App 1: Centro SIS -->
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="ios-app-icon w-[60px] h-[60px] flex-shrink-0">
+                  <img
+                    src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/0c/0b/04/0c0b0473-988d-8fbb-123e-9472a3322478/Placeholder.mill/128x128Icon.ApSiOS01-75.jpg"
+                    alt="Centro SIS"
+                    onerror="this.onerror=null; this.src='https://placehold.co/128x128/2563eb/ffffff?text=SIS';"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="min-w-0">
+                  <h3 class="text-[15px] font-medium truncate">Centro SIS</h3>
+                  <p class="text-[13px] truncate" style="color: var(--ios-text-secondary);">Educación</p>
+                </div>
+              </div>
+              <a
+                href="https://apps.apple.com/ar/app/centro-sis/id6759153699"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-ver flex-shrink-0"
+              >
+                Ver
+              </a>
+            </div>
+
+            <div class="ml-[72px] border-b" style="border-color: var(--ios-separator);"></div>
+
+            <!-- App 2: Unique -->
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="ios-app-icon w-[60px] h-[60px] flex-shrink-0">
+                  <img
+                    src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a3/fc/d2/a3fcd2d2-1240-424f-bbe3-ddc18b167983/Placeholder.mill/128x128Icon.ApSiOS01-75.jpg"
+                    alt="Unique"
+                    onerror="this.onerror=null; this.src='https://placehold.co/128x128/7c3aed/ffffff?text=U';"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="min-w-0">
+                  <h3 class="text-[15px] font-medium truncate">Unique</h3>
+                  <p class="text-[13px] truncate" style="color: var(--ios-text-secondary);">Utilidades</p>
+                </div>
+              </div>
+              <a
+                href="https://apps.apple.com/ar/app/unique/id6753878066"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-ver flex-shrink-0"
+              >
+                Ver
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Tab Bar Inferior Translúcida de iOS App Store -->
+      <nav class="ios-tabbar" aria-label="Navegación principal de App Store">
+        <!-- Hoy -->
+        <button type="button" class="tab-item" data-tab="Hoy">
+          <svg width="21" height="23" viewBox="0 0 107.046 120" fill="currentColor">
+            <path d="M34.77 32.741h39.37c1.72 0 3.005-1.337 3.005-3.058 0-1.658-1.285-2.943-3.005-2.943H34.77c-1.783 0-3.109 1.285-3.109 2.943 0 1.721 1.326 3.058 3.109 3.058m0 14.16h23.071c1.731 0 3.057-1.337 3.057-3.047 0-1.669-1.326-2.943-3.057-2.943H34.77c-1.783 0-3.109 1.274-3.109 2.943 0 1.71 1.326 3.047 3.109 3.047m.769 48.307h36.02c4.299 0 6.521-2.212 6.521-6.511V61.581c0-4.299-2.222-6.51-6.521-6.51h-36.02c-4.144 0-6.573 2.211-6.573 6.51v27.116c0 4.299 2.429 6.511 6.573 6.511m-23.078 1.796c0 10.232 5.034 15.318 15.111 15.318h51.851c10.087 0 15.163-5.086 15.163-15.318v-74.03c0-10.18-5.076-15.317-15.163-15.317H27.572c-10.077 0-15.111 5.137-15.111 15.317zm7.853-.124V23.099c0-4.876 2.61-7.589 7.693-7.589H79.04c5.031 0 7.651 2.713 7.651 7.589V96.88c0 4.876-2.62 7.589-7.651 7.589H28.007c-5.083 0-7.693-2.713-7.693-7.589"/>
+          </svg>
+          <span>Hoy</span>
+        </button>
+
+        <!-- Juegos -->
+        <button type="button" class="tab-item" data-tab="Juegos">
+          <svg width="22" height="22" viewBox="0 0 20.904 20.654" fill="currentColor">
+            <path d="M8.118 20.508c1.026-.225 2.842-.86 3.74-1.553 1.3-1.006 1.924-2.11 1.827-3.896l-.03-.899c.83-.566 1.631-1.26 2.403-2.05 2.715-2.784 4.482-7.208 4.482-11.065C20.54.459 20.071 0 19.485 0c-3.847 0-8.271 1.768-11.054 4.473-.82.81-1.504 1.591-2.06 2.412l-.89-.03c-1.718-.078-2.86.46-3.896 1.817-.693.918-1.338 2.715-1.562 3.75-.147.713.449 1.035.976.898 1.152-.224 2.393-.722 3.399-.644v.634c-.02.45.039.733.38 1.085l1.368 1.357c.36.351.634.42 1.084.4l.625-.02c.107 1.036-.372 2.247-.635 3.4-.186.663.283 1.113.898.976M13.89 8.71a2.065 2.065 0 0 1-2.07-2.07c0-1.153.917-2.08 2.07-2.08a2.076 2.076 0 1 1 0 4.15M2.59 19.1l1.651-.048c.537-.01.967-.176 1.319-.528.44-.44.556-1.064.478-1.494-.058-.351-.41-.449-.566-.166-.069.098-.127.196-.244.303-.245.254-.43.313-.743.332l-.966.059a.265.265 0 0 1-.274-.264l.059-.977c.02-.322.088-.508.332-.732a1.5 1.5 0 0 1 .312-.244c.274-.127.176-.527-.166-.576a1.78 1.78 0 0 0-1.494.488c-.361.371-.527.781-.537 1.309l-.049 1.65c-.02.547.352.908.889.889"/>
+          </svg>
+          <span>Juegos</span>
+        </button>
+
+        <!-- Apps (Activo) -->
+        <button type="button" class="tab-item active" data-tab="Apps">
+          <svg width="23" height="22" viewBox="0 0 24.805 23.486" fill="currentColor">
+            <path d="m2.48 15.137 6.036 2.754c1.445.664 2.578.976 3.7.976 1.134 0 2.266-.312 3.712-.976l6.035-2.754q.066-.03.127-.063c.458.395.625.835.625 1.293 0 .674-.352 1.299-1.475 1.807l-6.025 2.754c-1.26.576-2.158.82-2.998.82-.83 0-1.729-.244-2.988-.82l-6.026-2.754C2.08 17.666 1.73 17.04 1.73 16.367c0-.459.163-.9.622-1.294Z"/>
+            <path d="m2.48 10.479 6.036 2.763c1.445.654 2.578.977 3.7.977 1.134 0 2.266-.322 3.712-.977l6.035-2.764q.054-.023.103-.05c.476.397.649.844.649 1.31 0 .674-.352 1.3-1.475 1.817l-6.025 2.744c-1.26.576-2.158.82-2.998.82-.83 0-1.729-.244-2.988-.82l-6.026-2.744c-1.123-.518-1.474-1.143-1.474-1.817 0-.466.168-.914.646-1.311Z"/>
+            <path d="M12.217 12.49c.84 0 1.738-.244 2.998-.82l6.025-2.754c1.123-.508 1.475-1.133 1.475-1.807 0-.683-.361-1.308-1.475-1.816l-6.045-2.744c-1.23-.557-2.129-.82-2.978-.82-.84 0-1.739.263-2.979.82L3.203 5.293C2.08 5.801 1.73 6.426 1.73 7.109c0 .674.351 1.3 1.474 1.807L9.23 11.67c1.26.576 2.158.82 2.988.82"/>
+          </svg>
+          <span>Apps</span>
+        </button>
+
+        <!-- Arcade -->
+        <button type="button" class="tab-item" data-tab="Arcade">
+          <svg width="23" height="21" viewBox="0 0 23.623 21.396" fill="currentColor">
+            <path d="M11.63 21.397a7.6 7.6 0 0 0 3.282-.713l6.777-3.047c1.055-.479 1.573-.87 1.573-1.7v-.742c0-.322-.342-.39-.528-.302l-7.275 3.3a9.3 9.3 0 0 1-3.818.82c-1.309 0-2.373-.175-3.819-.84l-7.285-3.3c-.185-.088-.537 0-.537.322v.742c0 .83.518 1.221 1.582 1.7l6.768 3.047c.918.41 1.923.712 3.28.712m.01-3.721a8 8 0 0 0 3.301-.703l6.895-3.135c.596-.273 1.426-.732 1.426-1.416s-.84-1.143-1.446-1.416L14.941 7.87a7.9 7.9 0 0 0-2.45-.654v5.43c0 .283-.333.546-.85.546-.508 0-.84-.263-.84-.546v-5.43c-.899.097-1.7.322-2.451.654l-7.305 3.34c-.703.312-1.016.752-1.016 1.21 0 .46.313.9.996 1.212l7.325 3.34a7.8 7.8 0 0 0 3.29.703m-7.09-4.287c-.859 0-1.552-.42-1.552-.957 0-.528.693-.948 1.553-.948s1.543.42 1.543.948c0 .537-.684.957-1.543.957m7.09-6.973a3.193 3.193 0 0 1-3.193-3.184C8.447 1.475 9.883.06 11.641.06a3.17 3.17 0 0 1 3.174 3.173 3.176 3.176 0 0 1-3.174 3.184"/>
+          </svg>
+          <span>Arcade</span>
+        </button>
+
+        <!-- Buscar -->
+        <button type="button" class="tab-item" data-tab="Buscar">
+          <svg width="21" height="21" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M11.87 10.835q.027.022.051.047l3.864 3.863a.735.735 0 1 1-1.04 1.04l-3.863-3.864-.047-.051a6.667 6.667 0 1 1 1.035-1.035M6.667 12a5.333 5.333 0 1 0 0-10.667 5.333 5.333 0 0 0 0 10.667"/>
+          </svg>
+          <span>Buscar</span>
+        </button>
+      </nav>
+
+      <!-- Home Indicator -->
+      <div class="home-indicator"></div>
+
+      <!-- Modal / Lightbox interno para Capturas de Pantalla -->
+      <div
+        id="screenshotModal"
+        class="hidden absolute inset-0 z-50 flex flex-col justify-between p-5 pt-14 pb-10 transition-opacity duration-200"
+        style="background-color: var(--ios-bg);"
+      >
+        <div class="flex items-center justify-between">
+          <span id="modalCounter" class="text-[13px] font-semibold" style="color: var(--ios-text-secondary);">
+            1 de 3
+          </span>
+          <button
+            id="closeModalBtn"
+            type="button"
+            class="text-[16px] font-bold cursor-pointer px-2 py-1"
+            style="color: var(--ios-blue);"
+          >
+            Listo
+          </button>
+        </div>
+
+        <div class="flex-1 flex items-center justify-center my-3 overflow-hidden">
+          <img
+            id="modalScreenshotImg"
+            src=""
+            alt="Vista ampliada"
+            class="max-h-full max-w-full rounded-[28px] shadow-2xl border border-black/10 object-contain"
+          />
+        </div>
+
+        <div class="flex items-center justify-center gap-4">
+          <button
+            id="prevShotBtn"
+            type="button"
+            class="px-4 py-1.5 rounded-full text-[13px] font-semibold cursor-pointer"
+            style="background-color: var(--ios-pill-gray); color: var(--ios-text-primary);"
+          >
+            ‹ Anterior
+          </button>
+          <button
+            id="nextShotBtn"
+            type="button"
+            class="px-4 py-1.5 rounded-full text-[13px] font-semibold cursor-pointer"
+            style="background-color: var(--ios-pill-gray); color: var(--ios-text-primary);"
+          >
+            Siguiente ›
+          </button>
+        </div>
+      </div>
+
+      <!-- Share Sheet nativo de iOS -->
+      <div
+        id="iosShareSheet"
+        class="hidden absolute inset-0 z-50 flex flex-col justify-end bg-black/45 backdrop-blur-[2px]"
+      >
+        <div
+          class="rounded-t-[28px] p-5 pb-9 shadow-2xl transition-transform"
+          style="background-color: var(--ios-grouped-bg); color: var(--ios-text-primary);"
+        >
+          <div class="flex items-center justify-between pb-4 border-b" style="border-color: var(--ios-separator);">
+            <div class="flex items-center gap-3">
+              <img
+                src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/60/39/d8/6039d855-6ae2-b298-8a36-c5542c9530fe/Placeholder.mill/400x400Icon.ApSiOS01-75.jpg"
+                onerror="this.onerror=null; this.src='https://placehold.co/80x80/0f172a/38bdf8?text=A';"
+                class="w-11 h-11 rounded-[11px] object-cover"
+                alt="Agendaza"
+              />
+              <div>
+                <div class="text-[15px] font-semibold">Agendaza</div>
+                <div class="text-[12px]" style="color: var(--ios-text-secondary);">apps.apple.com</div>
+              </div>
+            </div>
+            <button
+              id="closeShareBtn"
+              type="button"
+              class="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold cursor-pointer"
+              style="background-color: var(--ios-pill-gray); color: var(--ios-text-secondary);"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-4 space-y-2">
+            <button
+              id="copyLinkBtn"
+              type="button"
+              class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-[15px] font-medium cursor-pointer active:opacity-70"
+              style="background-color: var(--ios-elevated-bg);"
+            >
+              <span id="copyLinkText">Copiar enlace de App Store</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast flotante estilo iOS -->
+      <div
+        id="iosToast"
+        class="pointer-events-none opacity-0 transition-opacity duration-200 absolute top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full text-[12px] font-semibold shadow-lg whitespace-nowrap"
+        style="background-color: var(--ios-elevated-bg); color: var(--ios-text-primary); border: 0.5px solid var(--ios-separator);"
+      >
+        Mensaje
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const iphoneScreen = document.getElementById("iphoneScreen");
+      const themeToggleBtn = document.getElementById("themeToggleBtn");
+      const themeIcon = document.getElementById("themeIcon");
+      const themeLabel = document.getElementById("themeLabel");
+      const iosScrollArea = document.getElementById("iosScrollArea");
+      const iosNavbar = document.getElementById("iosNavbar");
+      const toastEl = document.getElementById("iosToast");
+
+      // Función auxiliar para notificaciones estilo iOS (sin alert)
+      let toastTimer = null;
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.remove("opacity-0");
+        toastEl.classList.add("opacity-100");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.remove("opacity-100");
+          toastEl.classList.add("opacity-0");
+        }, 2100);
+      }
+
+      // 1. Alternar Modo Claro / Modo Oscuro de iOS
+      let isDark = false;
+      themeToggleBtn.addEventListener("click", () => {
+        isDark = !isDark;
+        iphoneScreen.classList.toggle("ios-dark", isDark);
+        document.body.classList.toggle("dark-backdrop", isDark);
+        themeIcon.textContent = isDark ? "☀️" : "🌙";
+        themeLabel.textContent = isDark ? "Modo Claro iOS" : "Modo Oscuro iOS";
+      });
+
+      // 2. Efecto de scroll en barra de navegación superior iOS
+      iosScrollArea.addEventListener("scroll", () => {
+        if (iosScrollArea.scrollTop > 75) {
+          iosNavbar.classList.add("scrolled");
+        } else {
+          iosNavbar.classList.remove("scrolled");
+        }
+      });
+
+      // 3. Animación de descarga en botón "Obtener" -> Spinner iOS -> "Abrir"
+      const getButtons = document.querySelectorAll("[data-get-trigger]");
+      const priceSubLabel = document.getElementById("priceSubLabel");
+      const resetDownloadBtn = document.getElementById("resetDownloadBtn");
+      let appState = "idle"; // idle | downloading | installed
+
+      function renderGetButtons() {
+        getButtons.forEach((btn) => {
+          if (appState === "idle") {
+            btn.classList.remove("downloading");
+            btn.innerHTML = "Obtener";
+            priceSubLabel.textContent = "Gratis";
+            resetDownloadBtn.classList.add("hidden");
+            resetDownloadBtn.classList.remove("inline-flex");
+          } else if (appState === "downloading") {
+            btn.classList.add("downloading");
+            btn.innerHTML = `
+              <svg class="ios-spinner" width="26" height="26" viewBox="0 0 28 28">
+                <circle cx="14" cy="14" r="11" fill="none" stroke="var(--ios-pill-gray)" stroke-width="2.5"></circle>
+                <path d="M14 3 A11 11 0 0 1 25 14" fill="none" stroke="var(--ios-blue)" stroke-width="2.5" stroke-linecap="round"></path>
+                <rect x="10.5" y="10.5" width="7" height="7" rx="1.5" fill="var(--ios-blue)"></rect>
+              </svg>
+            `;
+            priceSubLabel.textContent = "Descargando…";
+          } else if (appState === "installed") {
+            btn.classList.remove("downloading");
+            btn.innerHTML = "Abrir";
+            priceSubLabel.textContent = "";
+            resetDownloadBtn.classList.remove("hidden");
+            resetDownloadBtn.classList.add("inline-flex");
+          }
+        });
+      }
+
+      getButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (appState === "idle") {
+            appState = "downloading";
+            renderGetButtons();
+            setTimeout(() => {
+              if (appState === "downloading") {
+                appState = "installed";
+                renderGetButtons();
+                showToast("Agendaza instalada correctamente");
+              }
+            }, 1900);
+          } else if (appState === "installed") {
+            showToast("Abriendo Agendaza…");
+          }
+        });
+      });
+
+      resetDownloadBtn.addEventListener("click", () => {
+        appState = "idle";
+        renderGetButtons();
+        showToast("Estado reiniciado");
+      });
+
+      // 4. Expandir / Colapsar descripción con botón "Más"
+      const toggleDescBtn = document.getElementById("toggleDescBtn");
+      const appDescriptionText = document.getElementById("appDescriptionText");
+      let descExpanded = false;
+
+      toggleDescBtn.addEventListener("click", () => {
+        descExpanded = !descExpanded;
+        if (descExpanded) {
+          appDescriptionText.classList.remove("line-clamp-3");
+          toggleDescBtn.textContent = "Menos";
+        } else {
+          appDescriptionText.classList.add("line-clamp-3");
+          toggleDescBtn.textContent = "Más";
+        }
+      });
+
+      // 5. Compatibilidad desplegable (iPhone, iPad)
+      const platformCompatToggle = document.getElementById("platformCompatToggle");
+      const platformCompatPanel = document.getElementById("platformCompatPanel");
+      const platformChevron = document.getElementById("platformChevron");
+
+      platformCompatToggle.addEventListener("click", () => {
+        const isHidden = platformCompatPanel.classList.toggle("hidden");
+        platformChevron.style.transform = isHidden ? "rotate(0deg)" : "rotate(180deg)";
+      });
+
+      // 6. Acordeones de Ficha Técnica (Compatibilidad y Edad)
+      document.querySelectorAll("[data-accordion-target]").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          const targetId = trigger.getAttribute("data-accordion-target");
+          const panel = document.getElementById(targetId);
+          const icon = trigger.querySelector("svg");
+          if (panel) {
+            const isHidden = panel.classList.toggle("hidden");
+            if (icon) {
+              icon.style.transform = isHidden ? "rotate(0deg)" : "rotate(180deg)";
+            }
+          }
+        });
+      });
+
+      // 7. Lightbox / Modal de capturas de pantalla
+      const screenshots = [
+        "../0.1.2/iphone_1_1179x2556.png",
+        "../0.1.2/iphone_2_1179x2556.png",
+        "../0.1.2/iphone_3_1179x2556.png"
+      ];
+      const screenshotModal = document.getElementById("screenshotModal");
+      const modalScreenshotImg = document.getElementById("modalScreenshotImg");
+      const modalCounter = document.getElementById("modalCounter");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+      const prevShotBtn = document.getElementById("prevShotBtn");
+      const nextShotBtn = document.getElementById("nextShotBtn");
+      let currentShotIndex = 0;
+
+      function openScreenshotModal(index) {
+        currentShotIndex = index;
+        modalScreenshotImg.src = screenshots[currentShotIndex];
+        modalScreenshotImg.onerror = function () {
+          this.onerror = null;
+          this.src = `https://placehold.co/600x1334/0d1425/38bdf8?text=Captura+${currentShotIndex + 1}`;
+        };
+        modalCounter.textContent = `${currentShotIndex + 1} de ${screenshots.length}`;
+        screenshotModal.classList.remove("hidden");
+      }
+
+      document.querySelectorAll("[data-screenshot-index]").forEach((card) => {
+        card.addEventListener("click", () => {
+          const idx = parseInt(card.getAttribute("data-screenshot-index"), 10);
+          openScreenshotModal(idx);
+        });
+      });
+
+      closeModalBtn.addEventListener("click", () => {
+        screenshotModal.classList.add("hidden");
+      });
+
+      prevShotBtn.addEventListener("click", () => {
+        const nextIdx = (currentShotIndex - 1 + screenshots.length) % screenshots.length;
+        openScreenshotModal(nextIdx);
+      });
+
+      nextShotBtn.addEventListener("click", () => {
+        const nextIdx = (currentShotIndex + 1) % screenshots.length;
+        openScreenshotModal(nextIdx);
+      });
+
+      // 8. Share Sheet nativo de iOS y copiado al portapapeles
+      const shareBtn = document.getElementById("shareBtn");
+      const iosShareSheet = document.getElementById("iosShareSheet");
+      const closeShareBtn = document.getElementById("closeShareBtn");
+      const copyLinkBtn = document.getElementById("copyLinkBtn");
+      const copyLinkText = document.getElementById("copyLinkText");
+
+      shareBtn.addEventListener("click", () => {
+        iosShareSheet.classList.remove("hidden");
+      });
+
+      closeShareBtn.addEventListener("click", () => {
+        iosShareSheet.classList.add("hidden");
+      });
+
+      iosShareSheet.addEventListener("click", (e) => {
+        if (e.target === iosShareSheet) {
+          iosShareSheet.classList.add("hidden");
+        }
+      });
+
+      copyLinkBtn.addEventListener("click", () => {
+        const tempInput = document.createElement("input");
+        tempInput.value = "https://apps.apple.com/ar/app/agendaza/id6833559244";
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        try {
+          document.execCommand("copy");
+          copyLinkText.textContent = "¡Enlace copiado!";
+          showToast("Enlace copiado al portapapeles");
+          setTimeout(() => {
+            copyLinkText.textContent = "Copiar enlace de App Store";
+            iosShareSheet.classList.add("hidden");
+          }, 900);
+        } catch (err) {
+          showToast("No se pudo copiar");
+        }
+        document.body.removeChild(tempInput);
+      });
+
+      // 9. Interacción en Tab Bar y botón Atrás
+      document.querySelectorAll(".tab-item").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab-item").forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+          const tabName = tab.getAttribute("data-tab");
+          if (tabName !== "Apps") {
+            showToast(`Pestaña: ${tabName}`);
+          } else {
+            iosScrollArea.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        });
+      });
+
+      document.getElementById("backBtn").addEventListener("click", () => {
+        iosScrollArea.scrollTo({ top: 0, behavior: "smooth" });
+        showToast("Volviendo a Negocios");
+      });
+    });
+  </script>
+</body>
+</html>

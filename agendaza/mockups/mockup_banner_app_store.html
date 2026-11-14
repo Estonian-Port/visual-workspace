@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es-MX">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resultados para “Agendaza” — App Store (Web & Banner)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --apple-bg: #FFFFFF;
+      --apple-sidebar-bg: #F5F5F7;
+      --apple-card-bg: #FFFFFF;
+      --apple-card-hover: #FAFAFC;
+      --apple-input-bg: rgba(118, 118, 128, 0.12);
+      --apple-pill-gray: #F2F2F7;
+      --apple-pill-gray-hover: #E5E5EA;
+      --apple-text-primary: #1D1D1F;
+      --apple-text-secondary: #86868B;
+      --apple-text-tertiary: #6E6E73;
+      --apple-blue: #007AFF;
+      --apple-blue-hover: #0066D6;
+      --apple-border: rgba(0, 0, 0, 0.08);
+      --apple-divider: rgba(0, 0, 0, 0.1);
+      --apple-popover-bg: rgba(255, 255, 255, 0.92);
+      --apple-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+      --apple-card-shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.11), 0 2px 6px rgba(0, 0, 0, 0.05);
+      --apple-footer-bg: #F5F5F7;
+    }
+
+    .apple-dark {
+      --apple-bg: #000000;
+      --apple-sidebar-bg: #161618;
+      --apple-card-bg: #1C1C1E;
+      --apple-card-hover: #242426;
+      --apple-input-bg: rgba(118, 118, 128, 0.24);
+      --apple-pill-gray: #2C2C2E;
+      --apple-pill-gray-hover: #3A3A3C;
+      --apple-text-primary: #F5F5F7;
+      --apple-text-secondary: #98989D;
+      --apple-text-tertiary: #AEAEB2;
+      --apple-blue: #0A84FF;
+      --apple-blue-hover: #409CFF;
+      --apple-border: rgba(255, 255, 255, 0.12);
+      --apple-divider: rgba(255, 255, 255, 0.12);
+      --apple-popover-bg: rgba(36, 36, 38, 0.94);
+      --apple-card-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+      --apple-card-shadow-hover: 0 14px 36px rgba(0, 0, 0, 0.65);
+      --apple-footer-bg: #161618;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", sans-serif;
+      background-color: #E8E8ED;
+      color: var(--apple-text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.25s ease;
+    }
+
+    body.dark-outer {
+      background-color: #0B0B0D;
+    }
+
+    /* Barra superior de herramientas del Mockup */
+    .mockup-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: rgba(29, 29, 31, 0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      color: #F5F5F7;
+    }
+
+    /* Contenedor principal adaptable a Desktop / Zoom Banner */
+    .viewport-stage {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0;
+      transition: padding 0.3s ease;
+    }
+
+    .viewport-stage.mode-desktop {
+      padding: 0;
+    }
+
+    .viewport-stage.mode-banner {
+      padding: 36px 16px 48px 16px;
+      align-items: center;
+    }
+
+    /* Shell de App Store Web */
+    .appstore-web-shell {
+      width: 100%;
+      min-height: calc(100vh - 54px);
+      background-color: var(--apple-bg);
+      color: var(--apple-text-primary);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Layout Desktop con Sidebar izquierdo fijo estilo apps.apple.com */
+    .appstore-body-layout {
+      display: flex;
+      flex: 1;
+    }
+
+    .desktop-sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background-color: var(--apple-sidebar-bg);
+      border-right: 1px solid var(--apple-divider);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: sticky;
+      top: 54px;
+      height: calc(100vh - 54px);
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .desktop-sidebar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Input de búsqueda Apple */
+    .apple-search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background-color: var(--apple-input-bg);
+      border-radius: 10px;
+      height: 36px;
+      padding: 0 10px;
+      transition: box-shadow 0.15s ease;
+    }
+    .apple-search-box:focus-within {
+      box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.35);
+    }
+    .apple-search-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--apple-text-primary);
+      font-size: 14px;
+      padding: 0 6px;
+    }
+
+    /* Items de navegación lateral */
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--apple-text-primary);
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+      text-decoration: none;
+    }
+    .sidebar-nav-item:hover {
+      background-color: rgba(128, 128, 128, 0.12);
+    }
+    .sidebar-nav-item .nav-svg {
+      color: var(--apple-blue);
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Tarjeta de Resultado de Búsqueda (Search Result Banner Card) */
+    .search-banner-card {
+      background-color: var(--apple-card-bg);
+      border: 1px solid var(--apple-border);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: var(--apple-card-shadow);
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .search-banner-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--apple-card-shadow-hover);
+      background-color: var(--apple-card-hover);
+    }
+
+    /* Botón "Ver" estilo App Store Web */
+    .get-button-gray {
+      background-color: var(--apple-pill-gray);
+      color: var(--apple-blue);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 5px 18px;
+      min-width: 68px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.12s ease;
+    }
+    .get-button-gray:hover {
+      background-color: var(--apple-pill-gray-hover);
+    }
+    .get-button-gray:active {
+      transform: scale(0.95);
+    }
+
+    /* Contenedor del Banner Promocional 1.5:1 (648x432) */
+    .promo-artwork-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.5 / 1;
+      border-radius: 14px;
+      overflow: hidden;
+      background-color: rgb(10, 21, 41);
+      border: 1px solid var(--apple-border);
+    }
+
+    .promo-artwork-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .search-banner-card:hover .promo-artwork-frame img {
+      transform: scale(1.018);
+    }
+
+    /* Popover selector de plataforma */
+    .platform-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 225px;
+      background-color: var(--apple-popover-bg);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      border: 1px solid var(--apple-border);
+      border-radius: 14px;
+      padding: 6px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+      z-index: 50;
+    }
+
+    .platform-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--apple-text-primary);
+      cursor: pointer;
+      transition: background-color 0.12s ease;
+    }
+    .platform-option:hover {
+      background-color: rgba(128, 128, 128, 0.14);
+    }
+    .platform-option.is-active {
+      color: var(--apple-blue);
+      font-weight: 600;
+    }
+
+    /* Footer oficial Apple */
+    .apple-footer {
+      background-color: var(--apple-footer-bg);
+      border-top: 1px solid var(--apple-divider);
+      padding: 22px 28px;
+      font-size: 12px;
+      color: var(--apple-text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Controles del Mockup -->
+  <div class="mockup-toolbar px-4 py-2.5">
+    <div class="max-w-7xl mx-auto hidden sm:flex flex-wrap items-center justify-between gap-3">
+      <!-- Indicador URL simulada -->
+      <div class="flex items-center gap-2 text-xs">
+        <span class="inline-flex items-center gap-1.5 bg-white/10 px-2.5 py-1 rounded-md font-mono text-white/90">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span id="mockUrlDisplay">apps.apple.com/ar/iphone/search?term=Agendaza</span>
+        </span>
+      </div>
+
+      <!-- Selector de Vista: Desktop Web / Tarjeta Banner Zoom -->
+      <div class="flex items-center bg-white/10 p-0.5 rounded-lg text-xs font-medium">
+        <button
+          type="button"
+          data-view-mode="desktop"
+          class="view-mode-btn px-3 py-1.5 rounded-md bg-white text-black font-semibold transition cursor-pointer"
+        >
+          🖥️ Web Desktop
+        </button>
+        <button
+          type="button"
+          data-view-mode="banner"
+          class="view-mode-btn px-3 py-1.5 rounded-md text-white/80 hover:text-white transition cursor-pointer"
+        >
+          🖼️ Solo Banner (Zoom)
+        </button>
+      </div>
+
+      <!-- Modo Claro / Oscuro -->
+      <button
+        id="themeSwitchBtn"
+        type="button"
+        class="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
+      >
+        <span id="themeEmoji">🌙</span>
+        <span id="themeText">Modo Oscuro</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Escenario Principal -->
+  <div id="viewportStage" class="viewport-stage mode-desktop">
+
+    <!-- VISTA 1: Apple App Store Web (Desktop) -->
+    <div id="appStoreWebShell" class="appstore-web-shell">
+
+      <!-- Cuerpo Principal con Sidebar Izquierdo (Desktop) + Contenido Derecho -->
+      <div class="appstore-body-layout">
+
+        <!-- Sidebar Izquierdo Oficial de apps.apple.com -->
+        <aside class="desktop-sidebar" aria-label="Navegación App Store">
+          <!-- Logo App Store + Selector Plataforma ("para iPhone ▾") -->
+          <div class="relative">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <svg width="114" height="20" viewBox="0 0 121 21" fill="currentColor" aria-label="App Store">
+                <g fill-rule="nonzero" opacity=".92" transform="translate(.086 .095)">
+                  <path d="M11.417 12.204H8.094l5.8-10.067q.285-.492.178-1.065a1.21 1.21 0 0 0-.637-.87Q12.9-.112 12.353.082a1.43 1.43 0 0 0-.811.684l-.575.942-.572-.942a1.46 1.46 0 0 0-.81-.69q-.541-.198-1.084.128-.53.306-.628.874t.188 1.06L9.412 4.45l-4.49 7.755H1.434q-.554 0-.994.378-.44.379-.44.992 0 .605.44.983t.994.378h11.979a2.45 2.45 0 0 0-.017-1.242 2.1 2.1 0 0 0-.66-1.06q-.49-.429-1.32-.429m9.086 0h-3.477l-3.798-6.559q-.57.42-.811 1.244a4.7 4.7 0 0 0-.154 1.755q.087.93.506 1.656l4.798 8.288q.276.49.818.685.54.195 1.084-.112.533-.299.64-.87.109-.573-.179-1.073L18.6 14.935h1.904q.561 0 .998-.378.435-.378.436-.983 0-.614-.436-.992a1.48 1.48 0 0 0-.998-.378m-17.72 3.713-.758 1.3q-.285.5-.184 1.069.102.567.625.875.551.315 1.094.116a1.5 1.5 0 0 0 .818-.689l1.106-1.881q-.132-.238-.506-.498a2.5 2.5 0 0 0-.937-.374q-.564-.113-1.257.082M28.145 16.906h2.768l1.251-3.825h5.506l1.251 3.825h2.78L36.408 2.109h-2.973zm6.747-12.162h.061l2.05 6.296h-4.172zM43.013 20.494h2.553V15.07h.051c.615 1.272 1.856 2.05 3.404 2.05 2.728 0 4.471-2.152 4.471-5.639v-.01c0-3.507-1.743-5.66-4.501-5.66-1.559 0-2.748.8-3.374 2.102h-.051V6.036h-2.553zm5.219-5.526c-1.58 0-2.687-1.364-2.687-3.487v-.01c0-2.133 1.108-3.507 2.687-3.507 1.63 0 2.656 1.333 2.656 3.507v.01c0 2.143-1.026 3.487-2.656 3.487M55.133 20.494h2.553V15.07h.051c.616 1.272 1.856 2.05 3.405 2.05 2.727 0 4.47-2.152 4.47-5.639v-.01c0-3.507-1.743-5.66-4.501-5.66-1.559 0-2.748.8-3.374 2.102h-.051V6.036h-2.553zm5.219-5.526c-1.58 0-2.687-1.364-2.687-3.487v-.01c0-2.133 1.108-3.507 2.687-3.507 1.63 0 2.656 1.333 2.656 3.507v.01c0 2.143-1.026 3.487-2.656 3.487M76.912 17.162c3.61 0 5.783-1.754 5.783-4.512v-.01c0-2.307-1.343-3.558-4.42-4.194l-1.599-.328c-1.784-.37-2.594-.984-2.594-2.03v-.01c0-1.18 1.077-1.99 2.81-2 1.66 0 2.799.769 2.973 2.06l.02.124h2.533l-.01-.174c-.154-2.533-2.266-4.235-5.496-4.235-3.189 0-5.476 1.763-5.486 4.368v.01c0 2.205 1.436 3.558 4.348 4.163l1.59.328c1.906.4 2.676.995 2.676 2.102v.01c0 1.272-1.17 2.103-3.036 2.103-1.856 0-3.158-.79-3.353-2.061l-.02-.123h-2.533l.01.154c.175 2.655 2.41 4.255 5.804 4.255M88.458 17.12c.513 0 .964-.05 1.261-.091V15.11c-.174.01-.369.041-.615.041-.933 0-1.405-.338-1.405-1.405V8.005h2.02V6.036H87.7V3.278h-2.594v2.758h-1.538v1.97h1.538v5.957c0 2.235 1.077 3.158 3.353 3.158M96.271 17.12c3.19 0 5.26-2.122 5.26-5.649v-.02c0-3.507-2.101-5.64-5.27-5.64-3.158 0-5.25 2.153-5.25 5.64v.02c0 3.517 2.061 5.65 5.26 5.65m.01-2.06c-1.63 0-2.665-1.302-2.665-3.589v-.02c0-2.256 1.056-3.569 2.645-3.569 1.62 0 2.666 1.302 2.666 3.568v.021c0 2.276-1.035 3.589-2.645 3.589M103.172 16.906h2.554v-6.307c0-1.61.871-2.522 2.317-2.522.43 0 .82.061 1.036.143V5.913a3.3 3.3 0 0 0-.81-.102c-1.251 0-2.154.79-2.492 2.102h-.051V6.036h-2.554zM115.17 17.12c2.84 0 4.44-1.68 4.778-3.352l.03-.113h-2.389l-.02.072c-.246.728-1.077 1.405-2.348 1.405-1.661 0-2.707-1.128-2.748-3.036h7.608v-.82c0-3.281-1.928-5.465-5.035-5.465s-5.106 2.256-5.106 5.68v.01c0 3.456 1.969 5.62 5.23 5.62m-.093-9.31c1.354 0 2.338.862 2.523 2.584h-5.097c.205-1.671 1.22-2.584 2.574-2.584"/>
+                </g>
+              </svg>
+
+              <button
+                id="platformDropdownBtn"
+                type="button"
+                class="inline-flex items-center gap-1 text-[13px] font-medium px-1.5 py-0.5 rounded-md hover:bg-black/5 cursor-pointer"
+                style="color: var(--apple-text-secondary);"
+              >
+                <span>para <span class="platform-label-sync">iPhone</span></span>
+                <svg width="10" height="10" viewBox="0 0 109.73 100" fill="currentColor">
+                  <path d="M54.884 70.758c1.234 0 2.435-.477 3.286-1.431l37.78-38.673c.818-.829 1.316-1.885 1.316-3.139 0-2.538-1.907-4.496-4.444-4.496-1.192 0-2.383.528-3.202 1.295L52.251 62.483h5.225l-37.38-38.169c-.808-.767-1.907-1.295-3.139-1.295-2.549 0-4.496 1.958-4.496 4.496 0 1.254.508 2.32 1.326 3.15l37.822 38.673c.891.953 1.99 1.42 3.275 1.42"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Popover desplegable de plataformas Apple -->
+            <div id="platformPopover" class="platform-popover hidden">
+              <div class="platform-option is-active" data-platform="iPhone" data-slug="iphone">
+                <div class="flex items-center gap-2.5">
+                  <svg width="14" height="18" viewBox="0 0 62.771 103.335" fill="currentColor">
+                    <path d="M13.275 103.335h36.169c7.963 0 13.326-5.053 13.326-12.665V12.665C62.771 5.053 57.407 0 49.444 0H13.275C5.301 0 0 5.053 0 12.665V90.67c0 7.612 5.301 12.665 13.275 12.665m1.005-7.842c-4.09 0-6.427-2.183-6.427-6.116V13.959c0-3.933 2.338-6.106 6.427-6.106h6.27c.766 0 1.181.405 1.181 1.173v1.109c.001 2.002 1.35 3.413 3.352 3.413h12.605c2.054 0 3.34-1.411 3.34-3.413v-1.11c0-.766.415-1.171 1.183-1.171h6.228c4.141-.001 6.427 2.172 6.427 6.106v75.417c0 3.933-2.286 6.116-6.427 6.116Zm6.775-3.581h20.712c1.296 0 2.27-.924 2.27-2.282s-.973-2.27-2.269-2.27H21.055c-1.358 0-2.27.912-2.27 2.27s.912 2.282 2.27 2.282"/>
+                  </svg>
+                  <span>iPhone</span>
+                </div>
+                <svg width="13" height="13" viewBox="0 0 117.817 120" fill="currentColor">
+                  <path d="M11.215 50.806c0 21.499 17.472 38.919 38.972 38.919 8.463 0 16.231-2.701 22.617-7.313l24.032 24.094c1.15 1.109 2.612 1.638 4.136 1.638 3.297 0 5.629-2.499 5.629-5.743 0-1.555-.612-2.954-1.576-4.032L81.097 74.388c5.038-6.551 7.999-14.693 7.999-23.582 0-21.49-17.42-38.961-38.909-38.961-21.5 0-38.972 17.471-38.972 38.961m8.36 0c0-16.921 13.681-30.601 30.612-30.601 16.868 0 30.6 13.68 30.6 30.601 0 16.879-13.732 30.611-30.6 30.611-16.931 0-30.612-13.732-30.612-30.611"/>
+                </svg>
+              </div>
+
+              <div class="platform-option" data-platform="iPad" data-slug="ipad">
+                <div class="flex items-center gap-2.5">
+                  <svg width="16" height="14" viewBox="0 0 115.09 89.912" fill="currentColor">
+                    <path d="M15.318 89.912h84.454c10.232 0 15.318-5.107 15.318-15.163V15.163C115.09 5.107 110.004 0 99.772 0H15.318C5.138 0 0 5.086 0 15.163v59.586c0 10.077 5.138 15.163 15.318 15.163m.125-7.905c-4.877 0-7.59-2.558-7.59-7.641v-58.82c0-5.032 2.713-7.64 7.59-7.64h84.204c4.834-.001 7.59 2.607 7.59 7.639v58.821c-.001 5.083-2.757 7.64-7.591 7.64Zm23.253-3.739h37.75c1.305 0 2.228-.86 2.228-2.218.001-1.41-.922-2.28-2.229-2.28H38.696c-1.306-.002-2.28.868-2.28 2.278-.001 1.36.974 2.222 2.279 2.222Z"/>
+                  </svg>
+                  <span>iPad</span>
+                </div>
+              </div>
+
+              <div class="platform-option" data-platform="Mac" data-slug="mac">
+                <div class="flex items-center gap-2.5">
+                  <svg width="17" height="12" viewBox="0 0 140.769 79.424" fill="currentColor">
+                    <path d="M0 73.887c0 3.049 2.478 5.537 5.475 5.537h129.82c3.038 0 5.475-2.488 5.475-5.537 0-3.09-2.437-5.578-5.475-5.578H124.59v-57.96C124.59 3.52 120.956 0 114.136 0H26.633c-6.457 0-10.452 3.52-10.452 10.35v57.958H5.475C2.478 68.309 0 70.797 0 73.887m24.086-5.578V12.585c0-3.161 1.529-4.742 4.7-4.742h83.198c3.171 0 4.751 1.58 4.751 4.742V68.31ZM55.65 7.843h1.244c.728 0 1.143.363 1.143 1.183v.591c0 2.003 1.286 3.413 3.392 3.413h18.036c1.992 0 3.289-1.41 3.289-3.413v-.591c0-.82.415-1.183 1.183-1.183h1.246v-4.02H55.649Z"/>
+                  </svg>
+                  <span>Mac</span>
+                </div>
+              </div>
+
+              <div class="platform-option" data-platform="Watch" data-slug="watch">
+                <div class="flex items-center gap-2.5">
+                  <svg width="14" height="17" viewBox="0 0 70.762 104.469" fill="currentColor">
+                    <path d="M0 71.965c0 7.57 2.937 13.122 8.492 16.165 2.698 1.442 4.232 3.256 5.26 6.483l1.518 5.26c.934 3.123 3.102 4.597 6.39 4.597h22.554c3.403-.001 5.416-1.423 6.391-4.596l1.58-5.261c.965-3.227 2.552-5.04 5.198-6.483 5.555-3.043 8.492-8.595 8.492-16.165V32.503c0-7.569-2.937-13.122-8.492-16.163-2.646-1.444-4.233-3.257-5.198-6.484l-1.58-5.261C49.733 1.525 47.565 0 44.215 0H21.66c-3.288 0-5.456 1.473-6.39 4.595l-1.518 5.26c-.976 3.177-2.51 5.094-5.26 6.485C2.989 19.226 0 24.83 0 32.503Zm64.824-23.17h1.767c2.499-.001 4.171-1.745 4.171-4.474v-6.626c0-2.78-1.67-4.524-4.171-4.524h-1.767ZM7.129 70.92V33.56c0-7.297 4.261-11.673 11.351-11.673h28.925c7.141 0 11.34 4.376 11.34 11.673v37.36c.001 7.285-4.198 11.66-11.339 11.66H18.48c-7.09.001-11.35-4.374-11.35-11.66Z"/>
+                  </svg>
+                  <span>Watch</span>
+                </div>
+              </div>
+
+              <div class="platform-option" data-platform="TV" data-slug="tv">
+                <div class="flex items-center gap-2.5">
+                  <svg width="16" height="14" viewBox="0 0 122.045 97.575" fill="currentColor">
+                    <path d="M12.523 81.04h97c8.227 0 12.521-4.307 12.521-12.524V12.575C122.045 4.305 117.75 0 109.522 0h-97C4.296 0 0 4.306 0 12.575v55.942c0 8.217 4.295 12.522 12.523 12.522ZM36.49 97.574h49.065a3.93 3.93 0 0 0 3.937-3.914c0-2.249-1.74-3.979-3.937-3.979H36.49c-2.197-.001-3.937 1.729-3.937 3.978a3.93 3.93 0 0 0 3.937 3.916ZM12.658 73.186c-3.172 0-4.805-1.622-4.805-4.794V12.699c0-3.224 1.633-4.845 4.805-4.845h96.73c3.17 0 4.802 1.621 4.802 4.845v55.693c.001 3.172-1.63 4.794-4.803 4.794Z"/>
+                  </svg>
+                  <span>TV</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Buscar del Sidebar -->
+          <div class="apple-search-box">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color: var(--apple-text-secondary);" class="flex-shrink-0">
+              <path d="M11.87 10.835q.027.022.051.047l3.864 3.863a.735.735 0 1 1-1.04 1.04l-3.863-3.864-.047-.051a6.667 6.667 0 1 1 1.035-1.035M6.667 12a5.333 5.333 0 1 0 0-10.667 5.333 5.333 0 0 0 0 10.667"/>
+            </svg>
+            <input
+              id="desktopSearchInput"
+              type="search"
+              value="Agendaza"
+              data-search-sync
+              placeholder="Buscar"
+              class="apple-search-input"
+            />
+            <button type="button" data-reset-search title="Restablecer 'Agendaza'" class="text-[11px] w-4 h-4 rounded-full flex items-center justify-center opacity-70 hover:opacity-100 cursor-pointer" style="background-color: var(--apple-text-secondary); color: var(--apple-bg);">
+              ✕
+            </button>
+          </div>
+
+          <!-- Navegación Primaria (Hoy, Juegos, Apps, Arcade) -->
+          <nav class="space-y-0.5">
+            <a href="#hoy" data-nav-toast="Hoy" class="sidebar-nav-item">
+              <svg class="nav-svg" viewBox="0 0 107.046 120" fill="currentColor">
+                <path d="M34.77 32.741h39.37c1.72 0 3.005-1.337 3.005-3.058 0-1.658-1.285-2.943-3.005-2.943H34.77c-1.783 0-3.109 1.285-3.109 2.943 0 1.721 1.326 3.058 3.109 3.058m0 14.16h23.071c1.731 0 3.057-1.337 3.057-3.047 0-1.669-1.326-2.943-3.057-2.943H34.77c-1.783 0-3.109 1.274-3.109 2.943 0 1.71 1.326 3.047 3.109 3.047m.769 48.307h36.02c4.299 0 6.521-2.212 6.521-6.511V61.581c0-4.299-2.222-6.51-6.521-6.51h-36.02c-4.144 0-6.573 2.211-6.573 6.51v27.116c0 4.299 2.429 6.511 6.573 6.511m-23.078 1.796c0 10.232 5.034 15.318 15.111 15.318h51.851c10.087 0 15.163-5.086 15.163-15.318v-74.03c0-10.18-5.076-15.317-15.163-15.317H27.572c-10.077 0-15.111 5.137-15.111 15.317zm7.853-.124V23.099c0-4.876 2.61-7.589 7.693-7.589H79.04c5.031 0 7.651 2.713 7.651 7.589V96.88c0 4.876-2.62 7.589-7.651 7.589H28.007c-5.083 0-7.693-2.713-7.693-7.589"/>
+              </svg>
+              <span>Hoy</span>
+            </a>
+
+            <a href="#juegos" data-nav-toast="Juegos" class="sidebar-nav-item">
+              <svg class="nav-svg" viewBox="0 0 20.904 20.654" fill="currentColor">
+                <path d="M8.118 20.508c1.026-.225 2.842-.86 3.74-1.553 1.3-1.006 1.924-2.11 1.827-3.896l-.03-.899c.83-.566 1.631-1.26 2.403-2.05 2.715-2.784 4.482-7.208 4.482-11.065C20.54.459 20.071 0 19.485 0c-3.847 0-8.271 1.768-11.054 4.473-.82.81-1.504 1.591-2.06 2.412l-.89-.03c-1.718-.078-2.86.46-3.896 1.817-.693.918-1.338 2.715-1.562 3.75-.147.713.449 1.035.976.898 1.152-.224 2.393-.722 3.399-.644v.634c-.02.45.039.733.38 1.085l1.368 1.357c.36.351.634.42 1.084.4l.625-.02c.107 1.036-.372 2.247-.635 3.4-.186.663.283 1.113.898.976M13.89 8.71a2.065 2.065 0 0 1-2.07-2.07c0-1.153.917-2.08 2.07-2.08a2.076 2.076 0 1 1 0 4.15M2.59 19.1l1.651-.048c.537-.01.967-.176 1.319-.528.44-.44.556-1.064.478-1.494-.058-.351-.41-.449-.566-.166-.069.098-.127.196-.244.303-.245.254-.43.313-.743.332l-.966.059a.265.265 0 0 1-.274-.264l.059-.977c.02-.322.088-.508.332-.732a1.5 1.5 0 0 1 .312-.244c.274-.127.176-.527-.166-.576a1.78 1.78 0 0 0-1.494.488c-.361.371-.527.781-.537 1.309l-.049 1.65c-.02.547.352.908.889.889"/>
+              </svg>
+              <span>Juegos</span>
+            </a>
+
+            <a href="#apps" data-nav-toast="Apps" class="sidebar-nav-item">
+              <svg class="nav-svg" viewBox="0 0 24.805 23.486" fill="currentColor">
+                <path d="m2.48 15.137 6.036 2.754c1.445.664 2.578.976 3.7.976 1.134 0 2.266-.312 3.712-.976l6.035-2.754q.066-.03.127-.063c.458.395.625.835.625 1.293 0 .674-.352 1.299-1.475 1.807l-6.025 2.754c-1.26.576-2.158.82-2.998.82-.83 0-1.729-.244-2.988-.82l-6.026-2.754C2.08 17.666 1.73 17.04 1.73 16.367c0-.459.163-.9.622-1.294Z"/>
+                <path d="m2.48 10.479 6.036 2.763c1.445.654 2.578.977 3.7.977 1.134 0 2.266-.322 3.712-.977l6.035-2.764q.054-.023.103-.05c.476.397.649.844.649 1.31 0 .674-.352 1.3-1.475 1.817l-6.025 2.744c-1.26.576-2.158.82-2.998.82-.83 0-1.729-.244-2.988-.82l-6.026-2.744c-1.123-.518-1.474-1.143-1.474-1.817 0-.466.168-.914.646-1.311Z"/>
+                <path d="M12.217 12.49c.84 0 1.738-.244 2.998-.82l6.025-2.754c1.123-.508 1.475-1.133 1.475-1.807 0-.683-.361-1.308-1.475-1.816l-6.045-2.744c-1.23-.557-2.129-.82-2.978-.82-.84 0-1.739.263-2.979.82L3.203 5.293C2.08 5.801 1.73 6.426 1.73 7.109c0 .674.351 1.3 1.474 1.807L9.23 11.67c1.26.576 2.158.82 2.988.82"/>
+              </svg>
+              <span>Apps</span>
+            </a>
+
+            <a href="#arcade" data-nav-toast="Arcade" class="sidebar-nav-item">
+              <svg class="nav-svg" viewBox="0 0 23.623 21.396" fill="currentColor">
+                <path d="M11.63 21.397a7.6 7.6 0 0 0 3.282-.713l6.777-3.047c1.055-.479 1.573-.87 1.573-1.7v-.742c0-.322-.342-.39-.528-.302l-7.275 3.3a9.3 9.3 0 0 1-3.818.82c-1.309 0-2.373-.175-3.819-.84l-7.285-3.3c-.185-.088-.537 0-.537.322v.742c0 .83.518 1.221 1.582 1.7l6.768 3.047c.918.41 1.923.712 3.28.712m.01-3.721a8 8 0 0 0 3.301-.703l6.895-3.135c.596-.273 1.426-.732 1.426-1.416s-.84-1.143-1.446-1.416L14.941 7.87a7.9 7.9 0 0 0-2.45-.654v5.43c0 .283-.333.546-.85.546-.508 0-.84-.263-.84-.546v-5.43c-.899.097-1.7.322-2.451.654l-7.305 3.34c-.703.312-1.016.752-1.016 1.21 0 .46.313.9.996 1.212l7.325 3.34a7.8 7.8 0 0 0 3.29.703m-7.09-4.287c-.859 0-1.552-.42-1.552-.957 0-.528.693-.948 1.553-.948s1.543.42 1.543.948c0 .537-.684.957-1.543.957m7.09-6.973a3.193 3.193 0 0 1-3.193-3.184C8.447 1.475 9.883.06 11.641.06a3.17 3.17 0 0 1 3.174 3.173 3.176 3.176 0 0 1-3.174 3.184"/>
+              </svg>
+              <span>Arcade</span>
+            </a>
+          </nav>
+
+          <!-- Sección Categorías con los iconos exactos de Apple -->
+          <div class="pt-2 border-t" style="border-color: var(--apple-divider);">
+            <div class="px-2.5 pb-2 text-[11px] font-semibold uppercase tracking-wider" style="color: var(--apple-text-secondary);">
+              Categorías
+            </div>
+            <ul class="space-y-0.5 text-[13px]">
+              <li>
+                <a href="#cat-categorias" data-nav-toast="Categorías" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/78/61/b9/7861b9d5-8999-25f6-303d-08bf6112f2ce/f26de0fd-1ba0-4cbf-8c76-33fb0fbfeb16.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>Categorías</span>
+                </a>
+              </li>
+              <li>
+                <a href="#cat-foto" data-nav-toast="Fotografía y video" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features221/v4/dc/5c/56/dc5c5645-7397-d0f8-b36f-ad91054fdb93/c31e44f2-1f97-4f5a-8629-16eaa60cbd5f.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>Fotografía y video</span>
+                </a>
+              </li>
+              <li>
+                <a href="#cat-salud" data-nav-toast="Salud y fitness" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/20/ca/47/20ca479c-d4ef-49b7-84aa-6afb1018cb08/7998d3a4-33e3-4abd-9f8b-4d50b60a6a7b.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>Salud y fitness</span>
+                </a>
+              </li>
+              <li>
+                <a href="#cat-productividad" data-nav-toast="Productividad" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/8f/12/b1/8f12b11b-6d84-be31-448b-9a1a8e70823d/49f6ac0a-e911-4ec3-babc-69d92f5749a0.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>Productividad</span>
+                </a>
+              </li>
+              <li>
+                <a href="#cat-entretenimiento" data-nav-toast="Entretenimiento" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/6f/ab/1a/6fab1a47-81a1-2602-113f-e858e458d3dc/df14443a-6b5d-4e5a-8301-01aed86e3024.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>Entretenimiento</span>
+                </a>
+              </li>
+              <li>
+                <a href="#cat-accion" data-nav-toast="Acción" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/e4/ea/0a/e4ea0a97-9d12-cd3f-c0d2-9e7e34222e6e/aec56635-f46c-4f90-bbae-7f4abf2fc8ec.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>Acción</span>
+                </a>
+              </li>
+              <li>
+                <a href="#cat-aventura" data-nav-toast="Aventura" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/56/4d/c3/564dc32e-ba9f-2447-4f06-b2a35bc180d3/15bbc0c7-668b-4a40-b331-8465451c5198.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>Aventura</span>
+                </a>
+              </li>
+              <li>
+                <a href="#cat-ingenio" data-nav-toast="De ingenio" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/4a/b4/95/4ab4951e-bcd2-df10-7c0c-b439c2a026af/31bf5127-cb13-4bcf-b995-5360bd8a9bc0.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>De ingenio</span>
+                </a>
+              </li>
+              <li>
+                <a href="#cat-indie" data-nav-toast="Indie" class="sidebar-nav-item">
+                  <img src="https://is1-ssl.mzstatic.com/image/thumb/Features211/v4/7c/75/34/7c7534e2-4d79-2c32-f06b-3225f7ee7517/2efd3a78-2b87-4808-a1d0-e018fd628a4e.png/40x40bb.webp" onerror="this.style.display='none'" alt="" class="w-5 h-5 rounded" />
+                  <span>Indie</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Área Principal de Resultados -->
+        <main class="flex-1 min-w-0 px-5 sm:px-9 py-7 flex flex-col">
+          <!-- Encabezado de página -->
+          <div class="pb-5 border-b" style="border-color: var(--apple-divider);">
+            <h1 id="searchResultsHeading" class="text-[26px] sm:text-[32px] font-bold tracking-[-0.025em] leading-tight">
+              Resultados para “Agendaza”
+            </h1>
+          </div>
+
+          <!-- Grid de Resultados (Exacto a search-result-grid de Apple) -->
+          <section class="pt-6 pb-10">
+            <div id="agendazaResultGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+              <!-- TARJETA BANNER OFICIAL DE AGENDAZA -->
+              <article id="agendazaCard" class="search-banner-card" role="button" tabindex="0" aria-label="Agendaza">
+                <!-- Fila superior (top-container): Icono + Título/Subtítulo + Botón "Ver" -->
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-12 h-12 rounded-[11px] overflow-hidden flex-shrink-0 border">
+                      <img
+                        src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/60/39/d8/6039d855-6ae2-b298-8a36-c5542c9530fe/Placeholder.mill/96x96Icon.ApSiOS01-75.webp"
+                        alt="Agendaza"
+                        onerror="this.onerror=null; this.src='https://placehold.co/96x96/0a1529/38bdf8?text=A';"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div class="min-w-0">
+                      <h2 class="text-[15px] font-semibold leading-snug truncate">
+                        Agendaza
+                      </h2>
+                      <p class="text-[13px] leading-snug truncate" style="color: var(--apple-text-secondary);">
+                        Gestion de salones de eventos
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    data-open-preview
+                    class="get-button-gray flex-shrink-0"
+                  >
+                    Ver
+                  </button>
+                </div>
+
+                <!-- Contenedor inferior: Banner Promocional 1.5:1 (648x432) -->
+                <div class="promo-artwork-frame">
+                  <img
+                    src="https://is1-ssl.mzstatic.com/image/thumb/j1WYeDuv4_IBJkI7YvhEdw/1296x864bb.webp"
+                    alt="Banner promocional de Agendaza en App Store"
+                    onerror="this.onerror=null; this.src='https://is1-ssl.mzstatic.com/image/thumb/j1WYeDuv4_IBJkI7YvhEdw/648x432bb-60.jpg';"
+                  />
+                </div>
+              </article>
+
+            </div>
+
+            <!-- Estado vacío si el usuario escribe otra búsqueda -->
+            <div id="emptySearchState" class="hidden py-16 text-center space-y-3">
+              <p class="text-[18px] font-semibold">No se encontraron resultados</p>
+              <p class="text-[14px]" style="color: var(--apple-text-secondary);">
+                Prueba buscando nuevamente “Agendaza” para ver el banner de la app.
+              </p>
+              <button
+                type="button"
+                data-reset-search
+                class="get-button-gray mt-2"
+              >
+                Restablecer búsqueda “Agendaza”
+              </button>
+            </div>
+          </section>
+
+          <!-- Footer Oficial de Apple App Store -->
+          <footer class="apple-footer mt-auto -mx-5 sm:-mx-9 -mb-7">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b" style="border-color: var(--apple-divider);">
+              <div class="flex items-center gap-3">
+                <button
+                  id="regionSwitcherBtn"
+                  type="button"
+                  class="font-medium hover:underline cursor-pointer"
+                  style="color: var(--apple-text-primary);"
+                >
+                  Argentina (Español)
+                </button>
+                <span style="color: var(--apple-divider);">|</span>
+                <button
+                  id="langAltBtn"
+                  type="button"
+                  class="hover:underline cursor-pointer"
+                  style="color: var(--apple-text-secondary);"
+                >
+                  English (UK)
+                </button>
+              </div>
+              <span class="text-[11px]" style="color: var(--apple-text-secondary);">
+                ID de App Store: 6833559244
+              </span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <p>
+                Copyright © 2026 <a href="https://www.apple.com/mx/" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--apple-text-primary);">Apple Inc.</a> Todos los derechos reservados.
+              </p>
+              <ul class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <li><a href="https://www.apple.com/legal/internet-services/" target="_blank" rel="noopener noreferrer" class="hover:underline">Términos del servicio de Internet</a></li>
+                <li>·</li>
+                <li><a href="https://www.apple.com/legal/privacy/data/es-419/app-store/" target="_blank" rel="noopener noreferrer" class="hover:underline">App Store y la privacidad</a></li>
+                <li>·</li>
+                <li><a href="https://www.apple.com/mx/legal/privacy/es-la/cookies/" target="_blank" rel="noopener noreferrer" class="hover:underline">Advertencia sobre cookies</a></li>
+                <li>·</li>
+                <li><a href="https://support.apple.com/es-lamr/billing" target="_blank" rel="noopener noreferrer" class="hover:underline">Soporte</a></li>
+              </ul>
+            </div>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <!-- VISTA 2: Solo Banner Destacado (Zoom Close-Up) -->
+    <div id="bannerZoomContainer" class="hidden w-full max-w-[680px]">
+      <div class="mb-3 flex items-center justify-between text-xs px-1" style="color: var(--apple-text-secondary);">
+        <span class="font-semibold">Vista aislada de Tarjeta de Búsqueda · App Store Market</span>
+        <span>Arte promocional: 648 × 432 px (Ratio 1.5:1)</span>
+      </div>
+
+      <article class="search-banner-card !p-5 !rounded-[24px]">
+        <div class="flex items-center justify-between gap-3.5">
+          <div class="flex items-center gap-3.5 min-w-0">
+            <div class="w-14 h-14 rounded-[13px] overflow-hidden flex-shrink-0 border">
+              <img
+                src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/60/39/d8/6039d855-6ae2-b298-8a36-c5542c9530fe/Placeholder.mill/96x96Icon.ApSiOS01-75.webp"
+                alt="Agendaza"
+                onerror="this.onerror=null; this.src='https://placehold.co/96x96/0a1529/38bdf8?text=A';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="min-w-0">
+              <h2 class="text-[18px] font-bold leading-snug truncate">Agendaza</h2>
+              <p class="text-[14px] leading-snug truncate" style="color: var(--apple-text-secondary);">
+                Gestion de salones de eventos
+              </p>
+            </div>
+          </div>
+
+          <button type="button" data-open-preview class="get-button-gray !h-[34px] !px-6 !text-[15px]">
+            Ver
+          </button>
+        </div>
+
+        <div class="promo-artwork-frame !rounded-[16px]">
+          <img
+            src="https://is1-ssl.mzstatic.com/image/thumb/j1WYeDuv4_IBJkI7YvhEdw/1296x864bb.webp"
+            alt="Banner promocional de Agendaza en App Store"
+            onerror="this.onerror=null; this.src='https://is1-ssl.mzstatic.com/image/thumb/j1WYeDuv4_IBJkI7YvhEdw/648x432bb-60.jpg';"
+          />
+        </div>
+      </article>
+    </div>
+
+  </div>
+
+  <!-- MODAL 1: Vista Previa Rápida del Banner y Ficha App Store -->
+  <div
+    id="previewModal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm"
+  >
+    <div
+      class="w-full max-w-[680px] rounded-[24px] overflow-hidden shadow-2xl border p-5 sm:p-6 space-y-4 transition-all"
+      style="background-color: var(--apple-card-bg); color: var(--apple-text-primary); border-color: var(--apple-border);"
+    >
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+          <img
+            src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/60/39/d8/6039d855-6ae2-b298-8a36-c5542c9530fe/Placeholder.mill/96x96Icon.ApSiOS01-75.webp"
+            onerror="this.onerror=null; this.src='https://placehold.co/96x96/0a1529/38bdf8?text=A';"
+            alt="Agendaza"
+            class="w-14 h-14 rounded-[13px] object-cover border"
+            style="border-color: var(--apple-border);"
+          />
+          <div>
+            <h3 class="text-[20px] font-bold leading-tight">Agendaza</h3>
+            <p class="text-[14px]" style="color: var(--apple-text-secondary);">Gestion de salones de eventos</p>
+            <p class="text-[12px] mt-0.5" style="color: var(--apple-blue);">Sebastian Rodriguez · Negocios · Gratis</p>
+          </div>
+        </div>
+
+        <button
+          id="closePreviewModalBtn"
+          type="button"
+          class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold cursor-pointer"
+          style="background-color: var(--apple-pill-gray); color: var(--apple-text-secondary);"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Banner en alta resolución -->
+      <div class="promo-artwork-frame">
+        <img
+          src="https://is1-ssl.mzstatic.com/image/thumb/j1WYeDuv4_IBJkI7YvhEdw/1296x864bb.webp"
+          alt="Arte promocional completo de Agendaza"
+          onerror="this.onerror=null; this.src='https://is1-ssl.mzstatic.com/image/thumb/j1WYeDuv4_IBJkI7YvhEdw/648x432bb-60.jpg';"
+        />
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="text-[12px]" style="color: var(--apple-text-secondary);">
+          Dimensiones del banner: <strong style="color: var(--apple-text-primary);">648 × 432 px</strong> (Retina 1296 × 864 px · Ratio 1.5:1)
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            id="copyStoreUrlBtn"
+            type="button"
+            class="get-button-gray"
+          >
+            Copiar enlace
+          </button>
+          <a
+            href="https://apps.apple.com/ar/app/agendaza/id6833559244"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-5 h-[30px] rounded-full text-[14px] font-semibold text-white inline-flex items-center justify-center transition"
+            style="background-color: var(--apple-blue);"
+          >
+            Abrir en App Store ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Selector de País o Región (Exacto del HTML de Apple) -->
+  <div
+    id="regionModal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+  >
+    <div
+      class="w-full max-w-[740px] max-h-[82vh] rounded-[18px] shadow-2xl border flex flex-col overflow-hidden"
+      style="background-color: var(--apple-card-bg); color: var(--apple-text-primary); border-color: var(--apple-border);"
+    >
+      <div class="px-6 py-4 border-b flex items-center justify-between" style="border-color: var(--apple-divider);">
+        <h3 class="text-[19px] font-bold">Elige un país o región</h3>
+        <button
+          id="closeRegionModalBtn"
+          type="button"
+          class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer"
+          style="background-color: var(--apple-pill-gray); color: var(--apple-text-secondary);"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-6 text-[13px]">
+        <div>
+          <h4 class="font-bold text-[15px] mb-2.5">Latinoamérica y el Caribe</h4>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <button type="button" data-region-choice="Argentina (Español)" data-country-code="ar" class="text-left py-1 hover:underline cursor-pointer font-semibold" style="color: var(--apple-blue);">Argentina (Español)</button>
+            <button type="button" data-region-choice="Brasil" data-country-code="br" class="text-left py-1 hover:underline cursor-pointer">Brasil</button>
+            <button type="button" data-region-choice="Chile (Español)" data-country-code="cl" class="text-left py-1 hover:underline cursor-pointer">Chile (Español)</button>
+            <button type="button" data-region-choice="Colombia (Español)" data-country-code="co" class="text-left py-1 hover:underline cursor-pointer">Colombia (Español)</button>
+            <button type="button" data-region-choice="México" data-country-code="mx" class="text-left py-1 hover:underline cursor-pointer">México</button>
+            <button type="button" data-region-choice="Perú" data-country-code="pe" class="text-left py-1 hover:underline cursor-pointer">Perú</button>
+            <button type="button" data-region-choice="Uruguay (English)" data-country-code="uy" class="text-left py-1 hover:underline cursor-pointer">Uruguay (English)</button>
+            <button type="button" data-region-choice="Paraguay (Español)" data-country-code="py" class="text-left py-1 hover:underline cursor-pointer">Paraguay (Español)</button>
+            <button type="button" data-region-choice="Ecuador (Español)" data-country-code="ec" class="text-left py-1 hover:underline cursor-pointer">Ecuador (Español)</button>
+          </div>
+        </div>
+
+        <div class="border-t pt-4" style="border-color: var(--apple-divider);">
+          <h4 class="font-bold text-[15px] mb-2.5">Estados Unidos, Canadá y Europa</h4>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <button type="button" data-region-choice="United States" data-country-code="us" class="text-left py-1 hover:underline cursor-pointer">United States</button>
+            <button type="button" data-region-choice="Estados Unidos (Español México)" data-country-code="us" class="text-left py-1 hover:underline cursor-pointer">Estados Unidos (Español México)</button>
+            <button type="button" data-region-choice="España" data-country-code="es" class="text-left py-1 hover:underline cursor-pointer">España</button>
+            <button type="button" data-region-choice="United Kingdom" data-country-code="gb" class="text-left py-1 hover:underline cursor-pointer">United Kingdom</button>
+            <button type="button" data-region-choice="France (Français)" data-country-code="fr" class="text-left py-1 hover:underline cursor-pointer">France (Français)</button>
+            <button type="button" data-region-choice="Italia" data-country-code="it" class="text-left py-1 hover:underline cursor-pointer">Italia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast discreto estilo Apple -->
+  <div
+    id="appleToast"
+    class="pointer-events-none opacity-0 transition-opacity duration-200 fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full text-xs font-semibold shadow-xl"
+    style="background-color: #1D1D1F; color: #F5F5F7; border: 1px solid rgba(255,255,255,0.14);"
+  >
+    Notificación
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const appStoreWebShell = document.getElementById("appStoreWebShell");
+      const bannerZoomContainer = document.getElementById("bannerZoomContainer");
+      const viewportStage = document.getElementById("viewportStage");
+      const mockUrlDisplay = document.getElementById("mockUrlDisplay");
+      const toastEl = document.getElementById("appleToast");
+
+      let currentCountry = "ar";
+      let currentPlatformSlug = "iphone";
+      let currentTerm = "agendaza";
+      let isDark = false;
+
+      let toastTimer = null;
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.remove("opacity-0");
+        toastEl.classList.add("opacity-100");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.remove("opacity-100");
+          toastEl.classList.add("opacity-0");
+        }, 2100);
+      }
+
+      function updateMockUrl() {
+        const q = currentTerm ? `?term=${encodeURIComponent(currentTerm)}` : "";
+        mockUrlDisplay.textContent = `apps.apple.com/${currentCountry}/${currentPlatformSlug}/search${q}`;
+      }
+
+      // 1. Selector de Modo de Vista (Desktop Web / Solo Banner Zoom)
+      const viewModeBtns = document.querySelectorAll(".view-mode-btn");
+      viewModeBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const mode = btn.getAttribute("data-view-mode");
+          viewModeBtns.forEach((b) => {
+            b.classList.remove("bg-white", "text-black", "font-semibold");
+            b.classList.add("text-white/80");
+          });
+          btn.classList.add("bg-white", "text-black", "font-semibold");
+          btn.classList.remove("text-white/80");
+
+          viewportStage.classList.remove("mode-desktop", "mode-banner");
+          viewportStage.classList.add(`mode-${mode}`);
+
+          if (mode === "banner") {
+            appStoreWebShell.classList.add("hidden");
+            bannerZoomContainer.classList.remove("hidden");
+          } else {
+            bannerZoomContainer.classList.add("hidden");
+            appStoreWebShell.classList.remove("hidden");
+          }
+        });
+      });
+
+      // 2. Modo Claro / Modo Oscuro Apple
+      const themeSwitchBtn = document.getElementById("themeSwitchBtn");
+      const themeEmoji = document.getElementById("themeEmoji");
+      const themeText = document.getElementById("themeText");
+
+      themeSwitchBtn.addEventListener("click", () => {
+        isDark = !isDark;
+        document.documentElement.classList.toggle("apple-dark", isDark);
+        document.body.classList.toggle("dark-outer", isDark);
+        themeEmoji.textContent = isDark ? "☀️" : "🌙";
+        themeText.textContent = isDark ? "Modo Claro" : "Modo Oscuro";
+      });
+
+      // 3. Selector de Plataforma ("para iPhone ▾")
+      const platformDropdownBtn = document.getElementById("platformDropdownBtn");
+      const platformPopover = document.getElementById("platformPopover");
+      const platformLabels = document.querySelectorAll(".platform-label-sync");
+
+      platformDropdownBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        platformPopover.classList.toggle("hidden");
+      });
+
+      document.addEventListener("click", () => {
+        platformPopover.classList.add("hidden");
+      });
+
+      document.querySelectorAll(".platform-option").forEach((opt) => {
+        opt.addEventListener("click", () => {
+          document.querySelectorAll(".platform-option").forEach((o) => o.classList.remove("is-active"));
+          opt.classList.add("is-active");
+          const label = opt.getAttribute("data-platform");
+          currentPlatformSlug = opt.getAttribute("data-slug");
+          platformLabels.forEach((el) => (el.textContent = label));
+          updateMockUrl();
+          showToast(`App Store para ${label}`);
+        });
+      });
+
+      // 4. Búsqueda interactiva
+      const searchInputs = document.querySelectorAll("[data-search-sync]");
+      const searchResultsHeading = document.getElementById("searchResultsHeading");
+      const agendazaResultGrid = document.getElementById("agendazaResultGrid");
+      const emptySearchState = document.getElementById("emptySearchState");
+
+      function applySearchTerm(rawVal) {
+        const val = rawVal.trim();
+        currentTerm = val;
+        searchInputs.forEach((inp) => {
+          if (inp.value !== rawVal) inp.value = rawVal;
+        });
+
+        if (!val) {
+          searchResultsHeading.textContent = "Buscar en App Store";
+          agendazaResultGrid.classList.add("hidden");
+          emptySearchState.classList.remove("hidden");
+        } else {
+          searchResultsHeading.textContent = `Resultados para “${val}”`;
+          const matchesAgendaza =
+            "agendaza".includes(val.toLowerCase()) ||
+            "gestion de salones de eventos".includes(val.toLowerCase());
+          if (matchesAgendaza) {
+            agendazaResultGrid.classList.remove("hidden");
+            emptySearchState.classList.add("hidden");
+          } else {
+            agendazaResultGrid.classList.add("hidden");
+            emptySearchState.classList.remove("hidden");
+          }
+        }
+        updateMockUrl();
+      }
+
+      searchInputs.forEach((inp) => {
+        inp.addEventListener("input", (e) => applySearchTerm(e.target.value));
+      });
+
+      document.querySelectorAll("[data-reset-search]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          applySearchTerm("Agendaza");
+          showToast("Búsqueda restablecida: Agendaza");
+        });
+      });
+
+      // 5. Modal de Vista Previa del Banner y Ficha App Store
+      const previewModal = document.getElementById("previewModal");
+      const agendazaCard = document.getElementById("agendazaCard");
+
+      function openPreviewModal() {
+        previewModal.classList.remove("hidden");
+      }
+
+      agendazaCard.addEventListener("click", openPreviewModal);
+      document.querySelectorAll("[data-open-preview]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openPreviewModal();
+        });
+      });
+
+      document.getElementById("closePreviewModalBtn").addEventListener("click", () => {
+        previewModal.classList.add("hidden");
+      });
+
+      previewModal.addEventListener("click", (e) => {
+        if (e.target === previewModal) previewModal.classList.add("hidden");
+      });
+
+      document.getElementById("copyStoreUrlBtn").addEventListener("click", () => {
+        const temp = document.createElement("input");
+        temp.value = "https://apps.apple.com/ar/app/agendaza/id6833559244";
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+          document.execCommand("copy");
+          showToast("Enlace de Agendaza copiado");
+        } catch (err) {
+          showToast("No se pudo copiar");
+        }
+        document.body.removeChild(temp);
+      });
+
+      // 6. Modal de Selección de País o Región
+      const regionModal = document.getElementById("regionModal");
+      const regionSwitcherBtn = document.getElementById("regionSwitcherBtn");
+
+      regionSwitcherBtn.addEventListener("click", () => {
+        regionModal.classList.remove("hidden");
+      });
+
+      document.getElementById("closeRegionModalBtn").addEventListener("click", () => {
+        regionModal.classList.add("hidden");
+      });
+
+      regionModal.addEventListener("click", (e) => {
+        if (e.target === regionModal) regionModal.classList.add("hidden");
+      });
+
+      document.querySelectorAll("[data-region-choice]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const regionName = btn.getAttribute("data-region-choice");
+          currentCountry = btn.getAttribute("data-country-code");
+          regionSwitcherBtn.textContent = regionName;
+          updateMockUrl();
+          regionModal.classList.add("hidden");
+          showToast(`Región cambiada a ${regionName}`);
+        });
+      });
+
+      // 7. Navegación lateral de ejemplo
+      document.querySelectorAll("[data-nav-toast]").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          showToast(`Sección: ${link.getAttribute("data-nav-toast")}`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
