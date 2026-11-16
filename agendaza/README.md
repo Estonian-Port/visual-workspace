@@ -27,7 +27,7 @@ Espacio de trabajo para armar, probar y versionar las imágenes de publicación 
 
 | Carpeta | Contenido |
 |---|---|
-| `assets/` | Logo de Agendaza (la "A", `logo.png`) y logo de estonianport (`logo.png`). |
+| `assets/` | Logo de Agendaza (la "A", `logo_agendaza.png`) y logo de Estonian Port (`logo_estonian_port.png`). |
 | `screenshots/` | Capturas reales de la app (Agenda, Reservar, Finanzas).|
 | `mockups/` | Un mockup de Play Store y otro de App Store donde se van intercambiando las imágenes para ver cómo se ven en la ficha. |
 | `0.x.x/` | Una carpeta por versión de la app, con las imágenes finales y de prueba que se generan para esa versión. |
