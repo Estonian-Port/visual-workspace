@@ -50,9 +50,9 @@ Espacio de trabajo para armar, probar y versionar las imágenes de publicación 
 * **Capturas verticales:** 3 imágenes por versión
   * **Tamaño:** 1179 × 2556 px
   * **Nombre de archivo:** `iphone_N_1179x2556.png` *(N = 1, 2, 3)*
-* **Banner:** 1 imagen por versión
-  * **Tamaño:** 1920 × 1080 px
-  * **Nombre de archivo:** `iphone_banner_1920x1080.png`
+* **Banner:** 2 imagen por versión
+  * **Tamaño:** 1920 × 1280 px y 3840 x 1646 px
+  * **Nombre de archivo:** `iphone_banner_1920x1280.png` y  ** `iphone_banner_3840x1646.png`**
 
 ##
 
